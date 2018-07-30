@@ -76,6 +76,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\MiscFunctions.vb" />
     <Compile Include="frm_Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -101,6 +102,7 @@
     <Compile Include="Classes\XtraFormTemp.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Objects\ReturnsDetails.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="frm_Main.resx">

@@ -16,12 +16,21 @@
 '                                                                          '
 ' Contributors :                                                           '
 '     Dineshkumar T                                                        '
+'                                                                          '
 '=========================================================================='
 
-Public Class frm_Main
+Namespace Objects
+    Public Class ReturnsDetails
 
-    Private Sub frm_Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        gc_Months.DataSource = Classes.MiscFunctions.GetAssessmentMonths
-    End Sub
+        Property Process As Boolean
+        ReadOnly Property Month As String
+        ReadOnly Property Year As String
 
-End Class
+        Sub New(ByVal Month As String, ByVal Year As String)
+            Me.Month = Month
+            Me.Year = Year
+            Me.Process = False
+        End Sub
+
+    End Class
+End Namespace

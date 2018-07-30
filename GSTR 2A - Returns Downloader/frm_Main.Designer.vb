@@ -52,16 +52,16 @@ Partial Class frm_Main
         Me.Jobs = New DevExpress.XtraEditors.RadioGroup()
         Me.btn_Start = New DevExpress.XtraEditors.SimpleButton()
         Me.grp_Process = New DevExpress.XtraEditors.GroupControl()
-        Me.btn_Continue = New DevExpress.XtraEditors.SimpleButton()
         Me.btn_Stop = New DevExpress.XtraEditors.SimpleButton()
+        Me.btn_Continue = New DevExpress.XtraEditors.SimpleButton()
         Me.grp_Months = New DevExpress.XtraEditors.GroupControl()
-        Me.ProgressBar = New System.Windows.Forms.ProgressBar()
-        Me.grp_Downloads = New DevExpress.XtraEditors.GroupControl()
-        Me.grp_Console = New DevExpress.XtraEditors.GroupControl()
-        Me.txt_DownloadsLocation = New DevExpress.XtraEditors.ButtonEdit()
-        Me.txt_Console = New System.Windows.Forms.RichTextBox()
         Me.gc_Months = New DevExpress.XtraGrid.GridControl()
         Me.gv_Months = New DevExpress.XtraGrid.Views.Grid.GridView()
+        Me.ProgressBar = New System.Windows.Forms.ProgressBar()
+        Me.grp_Downloads = New DevExpress.XtraEditors.GroupControl()
+        Me.txt_DownloadsLocation = New DevExpress.XtraEditors.ButtonEdit()
+        Me.grp_Console = New DevExpress.XtraEditors.GroupControl()
+        Me.txt_Console = New System.Windows.Forms.RichTextBox()
         CType(Me.grp_Credential, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Credential.SuspendLayout()
         CType(Me.txt_Password.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -73,13 +73,13 @@ Partial Class frm_Main
         Me.grp_Process.SuspendLayout()
         CType(Me.grp_Months, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Months.SuspendLayout()
-        CType(Me.grp_Downloads, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.grp_Downloads.SuspendLayout()
-        CType(Me.grp_Console, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.grp_Console.SuspendLayout()
-        CType(Me.txt_DownloadsLocation.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gc_Months, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.gv_Months, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.grp_Downloads, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grp_Downloads.SuspendLayout()
+        CType(Me.txt_DownloadsLocation.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.grp_Console, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grp_Console.SuspendLayout()
         Me.SuspendLayout()
         '
         'grp_Credential
@@ -176,16 +176,6 @@ Partial Class frm_Main
         Me.grp_Process.TabIndex = 11
         Me.grp_Process.Text = "Process"
         '
-        'btn_Continue
-        '
-        Me.btn_Continue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Continue.Location = New System.Drawing.Point(5, 52)
-        Me.btn_Continue.Name = "btn_Continue"
-        Me.btn_Continue.Size = New System.Drawing.Size(92, 24)
-        Me.btn_Continue.TabIndex = 4
-        Me.btn_Continue.Text = "Continue"
-        '
         'btn_Stop
         '
         Me.btn_Stop.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
@@ -195,6 +185,16 @@ Partial Class frm_Main
         Me.btn_Stop.Size = New System.Drawing.Size(92, 24)
         Me.btn_Stop.TabIndex = 5
         Me.btn_Stop.Text = "Stop"
+        '
+        'btn_Continue
+        '
+        Me.btn_Continue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.btn_Continue.Location = New System.Drawing.Point(5, 52)
+        Me.btn_Continue.Name = "btn_Continue"
+        Me.btn_Continue.Size = New System.Drawing.Size(92, 24)
+        Me.btn_Continue.TabIndex = 4
+        Me.btn_Continue.Text = "Continue"
         '
         'grp_Months
         '
@@ -207,6 +207,22 @@ Partial Class frm_Main
         Me.grp_Months.Size = New System.Drawing.Size(295, 143)
         Me.grp_Months.TabIndex = 12
         Me.grp_Months.Text = "Months"
+        '
+        'gc_Months
+        '
+        Me.gc_Months.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.gc_Months.Location = New System.Drawing.Point(2, 20)
+        Me.gc_Months.MainView = Me.gv_Months
+        Me.gc_Months.Name = "gc_Months"
+        Me.gc_Months.Size = New System.Drawing.Size(291, 121)
+        Me.gc_Months.TabIndex = 0
+        Me.gc_Months.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.gv_Months})
+        '
+        'gv_Months
+        '
+        Me.gv_Months.GridControl = Me.gc_Months
+        Me.gv_Months.Name = "gv_Months"
+        Me.gv_Months.OptionsView.ShowGroupPanel = False
         '
         'ProgressBar
         '
@@ -224,17 +240,6 @@ Partial Class frm_Main
         Me.grp_Downloads.TabIndex = 14
         Me.grp_Downloads.Text = "Downloads Location"
         '
-        'grp_Console
-        '
-        Me.grp_Console.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.grp_Console.Controls.Add(Me.txt_Console)
-        Me.grp_Console.Location = New System.Drawing.Point(12, 429)
-        Me.grp_Console.Name = "grp_Console"
-        Me.grp_Console.Size = New System.Drawing.Size(295, 107)
-        Me.grp_Console.TabIndex = 15
-        Me.grp_Console.Text = "Output"
-        '
         'txt_DownloadsLocation
         '
         Me.txt_DownloadsLocation.Dock = System.Windows.Forms.DockStyle.Fill
@@ -245,6 +250,17 @@ Partial Class frm_Main
         Me.txt_DownloadsLocation.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.txt_DownloadsLocation.Size = New System.Drawing.Size(291, 20)
         Me.txt_DownloadsLocation.TabIndex = 0
+        '
+        'grp_Console
+        '
+        Me.grp_Console.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.grp_Console.Controls.Add(Me.txt_Console)
+        Me.grp_Console.Location = New System.Drawing.Point(12, 429)
+        Me.grp_Console.Name = "grp_Console"
+        Me.grp_Console.Size = New System.Drawing.Size(295, 107)
+        Me.grp_Console.TabIndex = 15
+        Me.grp_Console.Text = "Output"
         '
         'txt_Console
         '
@@ -257,22 +273,6 @@ Partial Class frm_Main
         Me.txt_Console.Size = New System.Drawing.Size(291, 85)
         Me.txt_Console.TabIndex = 0
         Me.txt_Console.Text = ""
-        '
-        'gc_Months
-        '
-        Me.gc_Months.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.gc_Months.Location = New System.Drawing.Point(2, 20)
-        Me.gc_Months.MainView = Me.gv_Months
-        Me.gc_Months.Name = "gc_Months"
-        Me.gc_Months.Size = New System.Drawing.Size(291, 121)
-        Me.gc_Months.TabIndex = 0
-        Me.gc_Months.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.gv_Months})
-        '
-        'gv_Months
-        '
-        Me.gv_Months.GridControl = Me.gc_Months
-        Me.gv_Months.Name = "gv_Months"
-        Me.gv_Months.OptionsView.ShowGroupPanel = False
         '
         'frm_Main
         '
@@ -302,13 +302,13 @@ Partial Class frm_Main
         Me.grp_Process.ResumeLayout(False)
         CType(Me.grp_Months, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_Months.ResumeLayout(False)
-        CType(Me.grp_Downloads, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.grp_Downloads.ResumeLayout(False)
-        CType(Me.grp_Console, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.grp_Console.ResumeLayout(False)
-        CType(Me.txt_DownloadsLocation.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.gc_Months, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.gv_Months, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.grp_Downloads, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grp_Downloads.ResumeLayout(False)
+        CType(Me.txt_DownloadsLocation.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.grp_Console, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grp_Console.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
