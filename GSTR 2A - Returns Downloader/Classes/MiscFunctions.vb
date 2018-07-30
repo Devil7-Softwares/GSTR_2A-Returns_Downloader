@@ -50,5 +50,9 @@ Namespace Classes
             Return If(dateTime_.Month >= 4, dateTime_.Year + 1, dateTime_.Year)
         End Function
 
+        Public Function GetDriverPath() As String
+            Return IO.Path.Combine(Application.StartupPath, "Drivers", If(Environment.Is64BitOperatingSystem, "x64", "x86"), "geckodriver.exe")
+        End Function
+
     End Module
 End Namespace
