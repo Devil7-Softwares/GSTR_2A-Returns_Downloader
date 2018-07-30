@@ -186,6 +186,7 @@ Partial Class frm_Main
         Me.btn_Stop.Size = New System.Drawing.Size(92, 24)
         Me.btn_Stop.TabIndex = 5
         Me.btn_Stop.Text = "Stop"
+        Me.btn_Stop.Visible = False
         '
         'btn_Continue
         '
@@ -196,6 +197,7 @@ Partial Class frm_Main
         Me.btn_Continue.Size = New System.Drawing.Size(92, 24)
         Me.btn_Continue.TabIndex = 4
         Me.btn_Continue.Text = "Continue"
+        Me.btn_Continue.Visible = False
         '
         'grp_Months
         '
