@@ -62,6 +62,7 @@ Partial Class frm_Main
         Me.txt_DownloadsLocation = New DevExpress.XtraEditors.ButtonEdit()
         Me.grp_Console = New DevExpress.XtraEditors.GroupControl()
         Me.txt_Console = New System.Windows.Forms.RichTextBox()
+        Me.SelectDownloadsDialog = New System.Windows.Forms.FolderBrowserDialog()
         CType(Me.grp_Credential, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Credential.SuspendLayout()
         CType(Me.txt_Password.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -247,7 +248,6 @@ Partial Class frm_Main
         Me.txt_DownloadsLocation.Name = "txt_DownloadsLocation"
         Me.txt_DownloadsLocation.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton()})
         Me.txt_DownloadsLocation.Properties.ReadOnly = True
-        Me.txt_DownloadsLocation.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor
         Me.txt_DownloadsLocation.Size = New System.Drawing.Size(291, 20)
         Me.txt_DownloadsLocation.TabIndex = 0
         '
@@ -273,6 +273,10 @@ Partial Class frm_Main
         Me.txt_Console.Size = New System.Drawing.Size(291, 85)
         Me.txt_Console.TabIndex = 0
         Me.txt_Console.Text = ""
+        '
+        'SelectDownloadsDialog
+        '
+        Me.SelectDownloadsDialog.Description = "Select folder to store downloaded files"
         '
         'frm_Main
         '
@@ -332,4 +336,5 @@ Partial Class frm_Main
     Friend WithEvents txt_Console As RichTextBox
     Friend WithEvents gc_Months As DevExpress.XtraGrid.GridControl
     Friend WithEvents gv_Months As DevExpress.XtraGrid.Views.Grid.GridView
+    Friend WithEvents SelectDownloadsDialog As FolderBrowserDialog
 End Class

@@ -65,6 +65,18 @@ Namespace My
                 Me("Skin") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property DownloadsFolder() As String
+            Get
+                Return CType(Me("DownloadsFolder"),String)
+            End Get
+            Set
+                Me("DownloadsFolder") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
