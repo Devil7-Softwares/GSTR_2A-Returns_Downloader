@@ -87,6 +87,12 @@
     <Compile Include="Classes\MiscFunctions.vb" />
     <Compile Include="Classes\Native.vb" />
     <Compile Include="Classes\WebDriver.vb" />
+    <Compile Include="frm_About.designer.vb">
+      <DependentUpon>frm_About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frm_About.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frm_Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -122,6 +128,9 @@
     <Compile Include="Objects\ReturnsDetails.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frm_About.resx">
+      <DependentUpon>frm_About.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frm_Main.resx">
       <DependentUpon>frm_Main.vb</DependentUpon>
     </EmbeddedResource>

@@ -9,10 +9,10 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("GSTR 2A - Returns Downloader")>
-<Assembly: AssemblyDescription("")>
-<Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("GSTR 2A - Returns Downloader")>
-<Assembly: AssemblyCopyright("Copyright ©  2018")>
+<Assembly: AssemblyDescription("Simple tool to generate and download GSTR 2A Returns files from GST website.")>
+<Assembly: AssemblyCompany("Devil7 Softwares")>
+<Assembly: AssemblyProduct("Devil7 - Automation Tools")>
+<Assembly: AssemblyCopyright("Copyright © Devil7 2018")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>

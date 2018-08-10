@@ -230,4 +230,19 @@ Public Class frm_Main
 
         End Try
     End Sub
+
+    Private Sub btn_About_Click(sender As Object, e As EventArgs) Handles btn_About.Click
+        Dim d As New frm_About
+        d.ShowDialog()
+    End Sub
+
+    Private Sub frm_Main_Shown(sender As Object, e As EventArgs) Handles Me.Shown
+
+        If My.Settings.FirstRun Then
+            My.Settings.FirstRun = False
+            My.Settings.Save()
+            Dim d As New frm_About
+            d.ShowDialog()
+        End If
+    End Sub
 End Class

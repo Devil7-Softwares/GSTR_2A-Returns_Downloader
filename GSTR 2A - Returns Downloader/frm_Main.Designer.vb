@@ -64,6 +64,7 @@ Partial Class frm_Main
         Me.Worker = New System.ComponentModel.BackgroundWorker()
         Me.ProgressBar = New DevExpress.XtraEditors.ProgressBarControl()
         Me.DownloadsWatcher = New System.IO.FileSystemWatcher()
+        Me.btn_About = New DevExpress.XtraEditors.SimpleButton()
         CType(Me.grp_Credential, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Credential.SuspendLayout()
         CType(Me.txt_Password.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -198,7 +199,7 @@ Partial Class frm_Main
         Me.grp_Months.Controls.Add(Me.gc_Months)
         Me.grp_Months.Location = New System.Drawing.Point(12, 251)
         Me.grp_Months.Name = "grp_Months"
-        Me.grp_Months.Size = New System.Drawing.Size(295, 172)
+        Me.grp_Months.Size = New System.Drawing.Size(295, 169)
         Me.grp_Months.TabIndex = 12
         Me.grp_Months.Text = "Months"
         '
@@ -208,7 +209,7 @@ Partial Class frm_Main
         Me.gc_Months.Location = New System.Drawing.Point(2, 20)
         Me.gc_Months.MainView = Me.gv_Months
         Me.gc_Months.Name = "gc_Months"
-        Me.gc_Months.Size = New System.Drawing.Size(291, 150)
+        Me.gc_Months.Size = New System.Drawing.Size(291, 147)
         Me.gc_Months.TabIndex = 0
         Me.gc_Months.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.gv_Months})
         '
@@ -242,7 +243,7 @@ Partial Class frm_Main
         Me.grp_Console.Anchor = CType(((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grp_Console.Controls.Add(Me.txt_Console)
-        Me.grp_Console.Location = New System.Drawing.Point(12, 429)
+        Me.grp_Console.Location = New System.Drawing.Point(12, 426)
         Me.grp_Console.Name = "grp_Console"
         Me.grp_Console.Size = New System.Drawing.Size(295, 107)
         Me.grp_Console.TabIndex = 15
@@ -281,10 +282,19 @@ Partial Class frm_Main
         Me.DownloadsWatcher.Filter = "returns_*_R2A_*_R2A_others_*.zip"
         Me.DownloadsWatcher.SynchronizingObject = Me
         '
+        'btn_About
+        '
+        Me.btn_About.Location = New System.Drawing.Point(232, 539)
+        Me.btn_About.Name = "btn_About"
+        Me.btn_About.Size = New System.Drawing.Size(75, 23)
+        Me.btn_About.TabIndex = 17
+        Me.btn_About.Text = "About"
+        '
         'frm_Main
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.ClientSize = New System.Drawing.Size(319, 548)
+        Me.ClientSize = New System.Drawing.Size(319, 570)
+        Me.Controls.Add(Me.btn_About)
         Me.Controls.Add(Me.ProgressBar)
         Me.Controls.Add(Me.grp_Console)
         Me.Controls.Add(Me.grp_Downloads)
@@ -343,4 +353,5 @@ Partial Class frm_Main
     Friend WithEvents Worker As System.ComponentModel.BackgroundWorker
     Friend WithEvents ProgressBar As DevExpress.XtraEditors.ProgressBarControl
     Friend WithEvents DownloadsWatcher As IO.FileSystemWatcher
+    Friend WithEvents btn_About As DevExpress.XtraEditors.SimpleButton
 End Class
