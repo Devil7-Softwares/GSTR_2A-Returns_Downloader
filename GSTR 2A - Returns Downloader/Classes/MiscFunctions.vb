@@ -32,7 +32,7 @@ Namespace Classes
 
             For i As Integer = 0 To CurrentYear - 2017 'GST Is Implemented in 2017
                 Dim Year As Integer = CurrentYear - i
-                Dim AssessmentYear As String = Year & "-" & Year + 1
+                Dim AssessmentYear As String = Year & "-" & CInt(Year + 1).ToString.Substring(2, 2)
 
                 For j As Integer = 0 To MonthsOrder.Count - 1
                     Dim Month As Integer = MonthsOrder(j)
@@ -51,7 +51,7 @@ Namespace Classes
         End Function
 
         Public Function GetDriverPath() As String
-            Return IO.Path.Combine(Application.StartupPath, "Drivers", If(Environment.Is64BitOperatingSystem, "x64", "x86"), "geckodriver.exe")
+            Return IO.Path.Combine(Application.StartupPath, "Drivers", If(Environment.Is64BitOperatingSystem, "x64", "x86"))
         End Function
 
     End Module
