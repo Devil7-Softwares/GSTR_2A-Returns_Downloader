@@ -32,7 +32,12 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.GSTR_2A___Returns_Downloader.frm_Main
+            Me.MainForm = Global.Devil7.Automation.GSTR2A.Downloader.frm_Main
+        End Sub
+        
+        <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
+        Protected Overrides Sub OnCreateSplashScreen()
+            Me.SplashScreen = Global.Devil7.Automation.GSTR2A.Downloader.frm_Splash
         End Sub
     End Class
 End Namespace
