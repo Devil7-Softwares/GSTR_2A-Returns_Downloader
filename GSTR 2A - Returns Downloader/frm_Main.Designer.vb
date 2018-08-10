@@ -119,6 +119,8 @@ Partial Class frm_Main
         Me.txt_LoginID.EditValue = ""
         Me.txt_LoginID.Location = New System.Drawing.Point(91, 24)
         Me.txt_LoginID.Name = "txt_LoginID"
+        Me.txt_LoginID.Properties.Mask.EditMask = "[0-9]{2}[A-Z]{3}[ABCFGHLJPTK][A-Z][0-9]{4}[A-Z][0-9]{1}[Z]{1}[A-Z0-9]{1}"
+        Me.txt_LoginID.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx
         Me.txt_LoginID.Size = New System.Drawing.Size(199, 20)
         Me.txt_LoginID.TabIndex = 0
         '
