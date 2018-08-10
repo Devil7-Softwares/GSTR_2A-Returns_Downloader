@@ -53,16 +53,17 @@ Partial Class frm_Main
         Me.btn_Start = New DevExpress.XtraEditors.SimpleButton()
         Me.grp_Process = New DevExpress.XtraEditors.GroupControl()
         Me.btn_Stop = New DevExpress.XtraEditors.SimpleButton()
-        Me.btn_Continue = New DevExpress.XtraEditors.SimpleButton()
         Me.grp_Months = New DevExpress.XtraEditors.GroupControl()
         Me.gc_Months = New DevExpress.XtraGrid.GridControl()
         Me.gv_Months = New DevExpress.XtraGrid.Views.Grid.GridView()
-        Me.ProgressBar = New System.Windows.Forms.ProgressBar()
         Me.grp_Downloads = New DevExpress.XtraEditors.GroupControl()
         Me.txt_DownloadsLocation = New DevExpress.XtraEditors.ButtonEdit()
         Me.grp_Console = New DevExpress.XtraEditors.GroupControl()
         Me.txt_Console = New System.Windows.Forms.RichTextBox()
         Me.SelectDownloadsDialog = New System.Windows.Forms.FolderBrowserDialog()
+        Me.Worker = New System.ComponentModel.BackgroundWorker()
+        Me.ProgressBar = New DevExpress.XtraEditors.ProgressBarControl()
+        Me.DownloadsWatcher = New System.IO.FileSystemWatcher()
         CType(Me.grp_Credential, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Credential.SuspendLayout()
         CType(Me.txt_Password.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -81,6 +82,8 @@ Partial Class frm_Main
         CType(Me.txt_DownloadsLocation.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grp_Console, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Console.SuspendLayout()
+        CType(Me.ProgressBar.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DownloadsWatcher, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'grp_Credential
@@ -141,7 +144,7 @@ Partial Class frm_Main
         Me.grp_Jobs.Controls.Add(Me.Jobs)
         Me.grp_Jobs.Location = New System.Drawing.Point(12, 97)
         Me.grp_Jobs.Name = "grp_Jobs"
-        Me.grp_Jobs.Size = New System.Drawing.Size(187, 111)
+        Me.grp_Jobs.Size = New System.Drawing.Size(187, 82)
         Me.grp_Jobs.TabIndex = 9
         Me.grp_Jobs.Text = "Job"
         '
@@ -152,7 +155,7 @@ Partial Class frm_Main
         Me.Jobs.Location = New System.Drawing.Point(2, 20)
         Me.Jobs.Name = "Jobs"
         Me.Jobs.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(0, "Generate Download"), New DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Download File")})
-        Me.Jobs.Size = New System.Drawing.Size(183, 89)
+        Me.Jobs.Size = New System.Drawing.Size(183, 60)
         Me.Jobs.TabIndex = 2
         '
         'btn_Start
@@ -169,11 +172,10 @@ Partial Class frm_Main
         '
         Me.grp_Process.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grp_Process.Controls.Add(Me.btn_Stop)
-        Me.grp_Process.Controls.Add(Me.btn_Continue)
         Me.grp_Process.Controls.Add(Me.btn_Start)
         Me.grp_Process.Location = New System.Drawing.Point(205, 97)
         Me.grp_Process.Name = "grp_Process"
-        Me.grp_Process.Size = New System.Drawing.Size(102, 111)
+        Me.grp_Process.Size = New System.Drawing.Size(102, 82)
         Me.grp_Process.TabIndex = 11
         Me.grp_Process.Text = "Process"
         '
@@ -181,23 +183,12 @@ Partial Class frm_Main
         '
         Me.btn_Stop.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Stop.Location = New System.Drawing.Point(5, 82)
+        Me.btn_Stop.Location = New System.Drawing.Point(5, 53)
         Me.btn_Stop.Name = "btn_Stop"
         Me.btn_Stop.Size = New System.Drawing.Size(92, 24)
         Me.btn_Stop.TabIndex = 5
         Me.btn_Stop.Text = "Stop"
         Me.btn_Stop.Visible = False
-        '
-        'btn_Continue
-        '
-        Me.btn_Continue.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.btn_Continue.Location = New System.Drawing.Point(5, 52)
-        Me.btn_Continue.Name = "btn_Continue"
-        Me.btn_Continue.Size = New System.Drawing.Size(92, 24)
-        Me.btn_Continue.TabIndex = 4
-        Me.btn_Continue.Text = "Continue"
-        Me.btn_Continue.Visible = False
         '
         'grp_Months
         '
@@ -205,9 +196,9 @@ Partial Class frm_Main
             Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grp_Months.Controls.Add(Me.gc_Months)
-        Me.grp_Months.Location = New System.Drawing.Point(12, 280)
+        Me.grp_Months.Location = New System.Drawing.Point(12, 251)
         Me.grp_Months.Name = "grp_Months"
-        Me.grp_Months.Size = New System.Drawing.Size(295, 143)
+        Me.grp_Months.Size = New System.Drawing.Size(295, 172)
         Me.grp_Months.TabIndex = 12
         Me.grp_Months.Text = "Months"
         '
@@ -217,7 +208,7 @@ Partial Class frm_Main
         Me.gc_Months.Location = New System.Drawing.Point(2, 20)
         Me.gc_Months.MainView = Me.gv_Months
         Me.gc_Months.Name = "gc_Months"
-        Me.gc_Months.Size = New System.Drawing.Size(291, 121)
+        Me.gc_Months.Size = New System.Drawing.Size(291, 150)
         Me.gc_Months.TabIndex = 0
         Me.gc_Months.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.gv_Months})
         '
@@ -227,17 +218,10 @@ Partial Class frm_Main
         Me.gv_Months.Name = "gv_Months"
         Me.gv_Months.OptionsView.ShowGroupPanel = False
         '
-        'ProgressBar
-        '
-        Me.ProgressBar.Location = New System.Drawing.Point(12, 214)
-        Me.ProgressBar.Name = "ProgressBar"
-        Me.ProgressBar.Size = New System.Drawing.Size(295, 11)
-        Me.ProgressBar.TabIndex = 13
-        '
         'grp_Downloads
         '
         Me.grp_Downloads.Controls.Add(Me.txt_DownloadsLocation)
-        Me.grp_Downloads.Location = New System.Drawing.Point(12, 231)
+        Me.grp_Downloads.Location = New System.Drawing.Point(12, 202)
         Me.grp_Downloads.Name = "grp_Downloads"
         Me.grp_Downloads.Size = New System.Drawing.Size(295, 43)
         Me.grp_Downloads.TabIndex = 14
@@ -280,13 +264,30 @@ Partial Class frm_Main
         '
         Me.SelectDownloadsDialog.Description = "Select folder to store downloaded files"
         '
+        'Worker
+        '
+        Me.Worker.WorkerSupportsCancellation = True
+        '
+        'ProgressBar
+        '
+        Me.ProgressBar.Location = New System.Drawing.Point(12, 185)
+        Me.ProgressBar.Name = "ProgressBar"
+        Me.ProgressBar.Size = New System.Drawing.Size(295, 11)
+        Me.ProgressBar.TabIndex = 16
+        '
+        'DownloadsWatcher
+        '
+        Me.DownloadsWatcher.EnableRaisingEvents = True
+        Me.DownloadsWatcher.Filter = "returns_*_R2A_*_R2A_others_*.zip"
+        Me.DownloadsWatcher.SynchronizingObject = Me
+        '
         'frm_Main
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(319, 548)
+        Me.Controls.Add(Me.ProgressBar)
         Me.Controls.Add(Me.grp_Console)
         Me.Controls.Add(Me.grp_Downloads)
-        Me.Controls.Add(Me.ProgressBar)
         Me.Controls.Add(Me.grp_Months)
         Me.Controls.Add(Me.grp_Process)
         Me.Controls.Add(Me.grp_Jobs)
@@ -315,6 +316,8 @@ Partial Class frm_Main
         CType(Me.txt_DownloadsLocation.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.grp_Console, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_Console.ResumeLayout(False)
+        CType(Me.ProgressBar.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DownloadsWatcher, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -329,9 +332,7 @@ Partial Class frm_Main
     Friend WithEvents btn_Start As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents grp_Process As DevExpress.XtraEditors.GroupControl
     Friend WithEvents btn_Stop As DevExpress.XtraEditors.SimpleButton
-    Friend WithEvents btn_Continue As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents grp_Months As DevExpress.XtraEditors.GroupControl
-    Friend WithEvents ProgressBar As ProgressBar
     Friend WithEvents grp_Downloads As DevExpress.XtraEditors.GroupControl
     Friend WithEvents grp_Console As DevExpress.XtraEditors.GroupControl
     Friend WithEvents txt_DownloadsLocation As DevExpress.XtraEditors.ButtonEdit
@@ -339,4 +340,7 @@ Partial Class frm_Main
     Friend WithEvents gc_Months As DevExpress.XtraGrid.GridControl
     Friend WithEvents gv_Months As DevExpress.XtraGrid.Views.Grid.GridView
     Friend WithEvents SelectDownloadsDialog As FolderBrowserDialog
+    Friend WithEvents Worker As System.ComponentModel.BackgroundWorker
+    Friend WithEvents ProgressBar As DevExpress.XtraEditors.ProgressBarControl
+    Friend WithEvents DownloadsWatcher As IO.FileSystemWatcher
 End Class
