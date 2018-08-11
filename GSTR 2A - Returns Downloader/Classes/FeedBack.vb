@@ -42,7 +42,7 @@ Namespace Classes
             Me.BuildDate = ""
         End Sub
 
-        Sub New(ByVal AppName As String, ByVal UserName As String, ByVal UserEMail As String, ByVal Rating As Integer, ByVal Message As String, ByVal Version As String, ByVal BuildDate As String)
+        Sub New(ByVal AppName As String, ByVal Version As String, ByVal BuildDate As String, ByVal UserName As String, ByVal UserEMail As String, ByVal Rating As Integer, ByVal Message As String)
             Me.AppName = AppName
             Me.UserName = UserName
             Me.UserEMail = UserEMail
