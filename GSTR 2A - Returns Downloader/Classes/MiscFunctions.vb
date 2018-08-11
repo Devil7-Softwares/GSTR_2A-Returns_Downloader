@@ -54,5 +54,12 @@ Namespace Classes
             Return IO.Path.Combine(Application.StartupPath, "Drivers", If(Environment.Is64BitOperatingSystem, "x64", "x86"))
         End Function
 
+        Public Function isNetworkConnected(Optional Host As String = "www.google.com") As Boolean
+            If Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable Then
+                Return My.Computer.Network.Ping(Host)
+            End If
+            Return False
+        End Function
+
     End Module
 End Namespace
