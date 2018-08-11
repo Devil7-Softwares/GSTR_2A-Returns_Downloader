@@ -29,6 +29,8 @@ Namespace Classes
         Property UserEMail As String
         Property Rating As Integer
         Property Message As String
+        Property Version As String
+        Property BuildDate As String
 
         Sub New()
             Me.AppName = ""
@@ -36,22 +38,26 @@ Namespace Classes
             Me.UserEMail = ""
             Me.Rating = 5
             Me.Message = ""
+            Me.Version = ""
+            Me.BuildDate = ""
         End Sub
 
-        Sub New(ByVal AppName As String, ByVal UserName As String, ByVal UserEMail As String, ByVal Rating As Integer, ByVal Message As String)
+        Sub New(ByVal AppName As String, ByVal UserName As String, ByVal UserEMail As String, ByVal Rating As Integer, ByVal Message As String, ByVal Version As String, ByVal BuildDate As String)
             Me.AppName = AppName
             Me.UserName = UserName
             Me.UserEMail = UserEMail
             Me.Rating = Rating
             Me.Message = Message
+            Me.BuildDate = BuildDate
+            Me.Version = Version
         End Sub
 
         Function ToJSon() As String
             Return New JavaScriptSerializer().Serialize(Me)
         End Function
 
-        Public Shared Function ParseJSon(JSON As String) As DataVariable
-            Return New JavaScriptSerializer().Deserialize(Of DataVariable)(JSON)
+        Public Shared Function ParseJSon(JSON As String) As FeedBack
+            Return New JavaScriptSerializer().Deserialize(Of FeedBack)(JSON)
         End Function
 
     End Class
