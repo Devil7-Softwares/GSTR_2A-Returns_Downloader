@@ -65,6 +65,8 @@ Partial Class frm_Main
         Me.ProgressBar = New DevExpress.XtraEditors.ProgressBarControl()
         Me.DownloadsWatcher = New System.IO.FileSystemWatcher()
         Me.btn_About = New DevExpress.XtraEditors.SimpleButton()
+        Me.btn_Update = New DevExpress.XtraEditors.SimpleButton()
+        Me.btn_FeedBack = New DevExpress.XtraEditors.SimpleButton()
         CType(Me.grp_Credential, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Credential.SuspendLayout()
         CType(Me.txt_Password.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -292,10 +294,28 @@ Partial Class frm_Main
         Me.btn_About.TabIndex = 17
         Me.btn_About.Text = "About"
         '
+        'btn_Update
+        '
+        Me.btn_Update.Location = New System.Drawing.Point(12, 539)
+        Me.btn_Update.Name = "btn_Update"
+        Me.btn_Update.Size = New System.Drawing.Size(75, 23)
+        Me.btn_Update.TabIndex = 18
+        Me.btn_Update.Text = "Update"
+        '
+        'btn_FeedBack
+        '
+        Me.btn_FeedBack.Location = New System.Drawing.Point(93, 539)
+        Me.btn_FeedBack.Name = "btn_FeedBack"
+        Me.btn_FeedBack.Size = New System.Drawing.Size(133, 23)
+        Me.btn_FeedBack.TabIndex = 19
+        Me.btn_FeedBack.Text = "Support / Feedback"
+        '
         'frm_Main
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(319, 570)
+        Me.Controls.Add(Me.btn_FeedBack)
+        Me.Controls.Add(Me.btn_Update)
         Me.Controls.Add(Me.btn_About)
         Me.Controls.Add(Me.ProgressBar)
         Me.Controls.Add(Me.grp_Console)
@@ -356,4 +376,6 @@ Partial Class frm_Main
     Friend WithEvents ProgressBar As DevExpress.XtraEditors.ProgressBarControl
     Friend WithEvents DownloadsWatcher As IO.FileSystemWatcher
     Friend WithEvents btn_About As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents btn_FeedBack As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents btn_Update As DevExpress.XtraEditors.SimpleButton
 End Class

@@ -245,4 +245,9 @@ Public Class frm_Main
             d.ShowDialog()
         End If
     End Sub
+
+    Private Sub btn_FeedBack_Click(sender As Object, e As EventArgs) Handles btn_FeedBack.Click
+        Dim d As New frm_Feedback
+        d.ShowDialog()
+    End Sub
 End Class
