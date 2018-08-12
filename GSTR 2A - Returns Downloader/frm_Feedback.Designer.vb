@@ -32,6 +32,7 @@ Partial Class frm_Feedback
         Me.txt_Message = New DevExpress.XtraEditors.MemoEdit()
         Me.txt_Rating = New DevExpress.XtraEditors.RatingControl()
         Me.btn_Send = New DevExpress.XtraEditors.SimpleButton()
+        Me.FeedbackSender = New System.ComponentModel.BackgroundWorker()
         CType(Me.txt_Name.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txt_Email.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.txt_Message.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -114,6 +115,9 @@ Partial Class frm_Feedback
         Me.btn_Send.TabIndex = 4
         Me.btn_Send.Text = "Send Feedback"
         '
+        'FeedbackSender
+        '
+        '
         'frm_Feedback
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -132,6 +136,7 @@ Partial Class frm_Feedback
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frm_Feedback"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Feedback"
         CType(Me.txt_Name.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.txt_Email.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -151,4 +156,5 @@ Partial Class frm_Feedback
     Friend WithEvents txt_Message As DevExpress.XtraEditors.MemoEdit
     Friend WithEvents txt_Rating As DevExpress.XtraEditors.RatingControl
     Friend WithEvents btn_Send As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents FeedbackSender As System.ComponentModel.BackgroundWorker
 End Class
