@@ -155,7 +155,7 @@ Partial Class frm_Main
         Me.grp_Jobs.Controls.Add(Me.Jobs)
         Me.grp_Jobs.Location = New System.Drawing.Point(12, 97)
         Me.grp_Jobs.Name = "grp_Jobs"
-        Me.grp_Jobs.Size = New System.Drawing.Size(127, 82)
+        Me.grp_Jobs.Size = New System.Drawing.Size(142, 82)
         Me.grp_Jobs.TabIndex = 9
         Me.grp_Jobs.Text = "Job"
         '
@@ -166,7 +166,7 @@ Partial Class frm_Main
         Me.Jobs.Location = New System.Drawing.Point(2, 20)
         Me.Jobs.Name = "Jobs"
         Me.Jobs.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(0, "Generate Download"), New DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Download File")})
-        Me.Jobs.Size = New System.Drawing.Size(123, 60)
+        Me.Jobs.Size = New System.Drawing.Size(138, 60)
         Me.Jobs.TabIndex = 2
         '
         'btn_Start
@@ -175,7 +175,7 @@ Partial Class frm_Main
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Start.Location = New System.Drawing.Point(5, 23)
         Me.btn_Start.Name = "btn_Start"
-        Me.btn_Start.Size = New System.Drawing.Size(58, 24)
+        Me.btn_Start.Size = New System.Drawing.Size(71, 24)
         Me.btn_Start.TabIndex = 3
         Me.btn_Start.Text = "Start"
         '
@@ -184,9 +184,9 @@ Partial Class frm_Main
         Me.grp_Process.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grp_Process.Controls.Add(Me.btn_Stop)
         Me.grp_Process.Controls.Add(Me.btn_Start)
-        Me.grp_Process.Location = New System.Drawing.Point(239, 97)
+        Me.grp_Process.Location = New System.Drawing.Point(226, 97)
         Me.grp_Process.Name = "grp_Process"
-        Me.grp_Process.Size = New System.Drawing.Size(68, 82)
+        Me.grp_Process.Size = New System.Drawing.Size(81, 82)
         Me.grp_Process.TabIndex = 11
         Me.grp_Process.Text = "Process"
         '
@@ -196,7 +196,7 @@ Partial Class frm_Main
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Stop.Location = New System.Drawing.Point(5, 53)
         Me.btn_Stop.Name = "btn_Stop"
-        Me.btn_Stop.Size = New System.Drawing.Size(58, 24)
+        Me.btn_Stop.Size = New System.Drawing.Size(71, 24)
         Me.btn_Stop.TabIndex = 5
         Me.btn_Stop.Text = "Stop"
         Me.btn_Stop.Visible = False
@@ -321,9 +321,9 @@ Partial Class frm_Main
         Me.grp_Type.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grp_Type.Controls.Add(Me.Types)
-        Me.grp_Type.Location = New System.Drawing.Point(145, 97)
+        Me.grp_Type.Location = New System.Drawing.Point(160, 97)
         Me.grp_Type.Name = "grp_Type"
-        Me.grp_Type.Size = New System.Drawing.Size(90, 82)
+        Me.grp_Type.Size = New System.Drawing.Size(62, 82)
         Me.grp_Type.TabIndex = 20
         Me.grp_Type.Text = "Type"
         '
@@ -334,7 +334,7 @@ Partial Class frm_Main
         Me.Types.Location = New System.Drawing.Point(2, 20)
         Me.Types.Name = "Types"
         Me.Types.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(0, "JSON"), New DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Excel")})
-        Me.Types.Size = New System.Drawing.Size(86, 60)
+        Me.Types.Size = New System.Drawing.Size(58, 60)
         Me.Types.TabIndex = 2
         '
         'btn_Settings
