@@ -54,7 +54,6 @@ Namespace Classes
             Try
                 Driver = New FirefoxDriver(driverservice, FirefoxOpt, New TimeSpan(1, 0, 0, 0))
             Catch ex As Exception
-                MsgBox("Error while creating automated Firefox process." & vbNewLine & vbNewLine & vbNewLine & "Additional Information:" & vbNewLine & vbNewLine & ex.Message & vbNewLine & vbNewLine & ex.StackTrace, MsgBoxStyle.Exclamation + MsgBoxStyle.OkOnly, "Error")
                 Return False
             End Try
             Return True

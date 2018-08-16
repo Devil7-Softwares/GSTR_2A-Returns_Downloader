@@ -80,5 +80,12 @@ Namespace Classes
             Return dt
         End Function
 
+        Sub KillGeckoProcesses()
+            On Error Resume Next
+            For Each i As Process In Process.GetProcessesByName("geckodriver")
+                i.Kill()
+            Next
+        End Sub
+
     End Module
 End Namespace

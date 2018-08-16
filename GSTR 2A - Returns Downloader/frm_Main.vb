@@ -219,7 +219,8 @@ Public Class frm_Main
         If Worker.IsBusy Then
             Worker.CancelAsync()
         End If
-        Driver.Close()
+        If Driver IsNot Nothing Then Driver.Close()
+        Classes.MiscFunctions.KillGeckoProcesses()
     End Sub
 
     Private Sub DownloadsWatcher_Created(sender As Object, e As IO.FileSystemEventArgs) Handles DownloadsWatcher.Created
@@ -232,17 +233,7 @@ Public Class frm_Main
     End Sub
 
     Private Sub frm_Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        Try
-            For Each i As Process In Process.GetProcessesByName("geckodriver")
-                Try
-                    i.Kill()
-                Catch ex As Exception
-
-                End Try
-            Next
-        Catch ex As Exception
-
-        End Try
+        Classes.MiscFunctions.KillGeckoProcesses()
     End Sub
 
     Private Sub btn_About_Click(sender As Object, e As EventArgs) Handles btn_About.Click
