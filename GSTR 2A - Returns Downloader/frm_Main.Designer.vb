@@ -67,6 +67,8 @@ Partial Class frm_Main
         Me.btn_About = New DevExpress.XtraEditors.SimpleButton()
         Me.btn_Update = New DevExpress.XtraEditors.SimpleButton()
         Me.btn_FeedBack = New DevExpress.XtraEditors.SimpleButton()
+        Me.grp_Type = New DevExpress.XtraEditors.GroupControl()
+        Me.Types = New DevExpress.XtraEditors.RadioGroup()
         CType(Me.grp_Credential, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Credential.SuspendLayout()
         CType(Me.txt_Password.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -87,6 +89,9 @@ Partial Class frm_Main
         Me.grp_Console.SuspendLayout()
         CType(Me.ProgressBar.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DownloadsWatcher, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.grp_Type, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grp_Type.SuspendLayout()
+        CType(Me.Types.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'grp_Credential
@@ -149,7 +154,7 @@ Partial Class frm_Main
         Me.grp_Jobs.Controls.Add(Me.Jobs)
         Me.grp_Jobs.Location = New System.Drawing.Point(12, 97)
         Me.grp_Jobs.Name = "grp_Jobs"
-        Me.grp_Jobs.Size = New System.Drawing.Size(187, 82)
+        Me.grp_Jobs.Size = New System.Drawing.Size(127, 82)
         Me.grp_Jobs.TabIndex = 9
         Me.grp_Jobs.Text = "Job"
         '
@@ -160,7 +165,7 @@ Partial Class frm_Main
         Me.Jobs.Location = New System.Drawing.Point(2, 20)
         Me.Jobs.Name = "Jobs"
         Me.Jobs.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(0, "Generate Download"), New DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Download File")})
-        Me.Jobs.Size = New System.Drawing.Size(183, 60)
+        Me.Jobs.Size = New System.Drawing.Size(123, 60)
         Me.Jobs.TabIndex = 2
         '
         'btn_Start
@@ -169,7 +174,7 @@ Partial Class frm_Main
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Start.Location = New System.Drawing.Point(5, 23)
         Me.btn_Start.Name = "btn_Start"
-        Me.btn_Start.Size = New System.Drawing.Size(92, 24)
+        Me.btn_Start.Size = New System.Drawing.Size(58, 24)
         Me.btn_Start.TabIndex = 3
         Me.btn_Start.Text = "Start"
         '
@@ -178,9 +183,9 @@ Partial Class frm_Main
         Me.grp_Process.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grp_Process.Controls.Add(Me.btn_Stop)
         Me.grp_Process.Controls.Add(Me.btn_Start)
-        Me.grp_Process.Location = New System.Drawing.Point(205, 97)
+        Me.grp_Process.Location = New System.Drawing.Point(239, 97)
         Me.grp_Process.Name = "grp_Process"
-        Me.grp_Process.Size = New System.Drawing.Size(102, 82)
+        Me.grp_Process.Size = New System.Drawing.Size(68, 82)
         Me.grp_Process.TabIndex = 11
         Me.grp_Process.Text = "Process"
         '
@@ -190,7 +195,7 @@ Partial Class frm_Main
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Stop.Location = New System.Drawing.Point(5, 53)
         Me.btn_Stop.Name = "btn_Stop"
-        Me.btn_Stop.Size = New System.Drawing.Size(92, 24)
+        Me.btn_Stop.Size = New System.Drawing.Size(58, 24)
         Me.btn_Stop.TabIndex = 5
         Me.btn_Stop.Text = "Stop"
         Me.btn_Stop.Visible = False
@@ -310,10 +315,32 @@ Partial Class frm_Main
         Me.btn_FeedBack.TabIndex = 19
         Me.btn_FeedBack.Text = "Support / Feedback"
         '
+        'grp_Type
+        '
+        Me.grp_Type.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.grp_Type.Controls.Add(Me.Types)
+        Me.grp_Type.Location = New System.Drawing.Point(145, 97)
+        Me.grp_Type.Name = "grp_Type"
+        Me.grp_Type.Size = New System.Drawing.Size(90, 82)
+        Me.grp_Type.TabIndex = 20
+        Me.grp_Type.Text = "Type"
+        '
+        'Types
+        '
+        Me.Types.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Types.EditValue = 0
+        Me.Types.Location = New System.Drawing.Point(2, 20)
+        Me.Types.Name = "Types"
+        Me.Types.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(0, "JSON"), New DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Excel")})
+        Me.Types.Size = New System.Drawing.Size(86, 60)
+        Me.Types.TabIndex = 2
+        '
         'frm_Main
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(319, 570)
+        Me.Controls.Add(Me.grp_Type)
         Me.Controls.Add(Me.btn_FeedBack)
         Me.Controls.Add(Me.btn_Update)
         Me.Controls.Add(Me.btn_About)
@@ -350,6 +377,9 @@ Partial Class frm_Main
         Me.grp_Console.ResumeLayout(False)
         CType(Me.ProgressBar.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DownloadsWatcher, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.grp_Type, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grp_Type.ResumeLayout(False)
+        CType(Me.Types.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -378,4 +408,6 @@ Partial Class frm_Main
     Friend WithEvents btn_About As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents btn_FeedBack As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents btn_Update As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents grp_Type As DevExpress.XtraEditors.GroupControl
+    Friend WithEvents Types As DevExpress.XtraEditors.RadioGroup
 End Class

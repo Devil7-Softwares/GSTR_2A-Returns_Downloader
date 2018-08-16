@@ -96,7 +96,7 @@ Click:
             Next
         End Sub
 
-        Sub DownloadGSTR(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
+        Sub DownloadGSTR(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
             Threading.Thread.Sleep(5000)
 
             Owner.Write2Console("Filling Year & Month..." & vbNewLine & vbNewLine, Color.Yellow)
@@ -112,7 +112,12 @@ Click:
             Threading.Thread.Sleep(2000)
 
             Owner.Write2Console("Sending download request...", Color.Yellow)
-            ClickButtonByText("DOWNLOAD")
+            Select Case FileType
+                Case Enums.FileType.JSON
+                    ClickButtonByText("GENERATE JSON FILE TO DOWNLOAD")
+                Case Enums.FileType.Excel
+                    ClickButtonByText("GENERATE EXCEL FILE TO DOWNLOAD")
+            End Select
             WaitForLoad(Owner)
             Threading.Thread.Sleep(2000)
 
@@ -143,7 +148,7 @@ Click:
             ClickButtonByText("BACK")
             Threading.Thread.Sleep(3000)
         End Sub
-        Sub RequestGSTR(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
+        Sub RequestGSTR(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
             Threading.Thread.Sleep(5000)
 
             Owner.Write2Console("Filling Year & Month..." & vbNewLine & vbNewLine, Color.Yellow)
@@ -164,7 +169,12 @@ Click:
             Threading.Thread.Sleep(2000)
 
             Owner.Write2Console("Sending generate file request..." & vbNewLine & vbNewLine, Color.Yellow)
-            ClickButtonByText("GENERATE FILE")
+            Select Case FileType
+                Case Enums.FileType.JSON
+                    ClickButtonByText("GENERATE JSON FILE TO DOWNLOAD")
+                Case Enums.FileType.Excel
+                    ClickButtonByText("GENERATE EXCEL FILE TO DOWNLOAD")
+            End Select
             Threading.Thread.Sleep(3000)
 
             Owner.Write2Console("Processing response..." & vbNewLine, Color.Yellow)
@@ -176,7 +186,12 @@ Click:
                         Owner.Write2Console(Month & " - Generation is in progress" & vbNewLine & vbNewLine, Color.Green)
                     ElseIf i.Text.Contains("click on generate file again") Or i.Text.Contains("click on the download button again") Then
                         Owner.Write2Console(Month & " - Old Generation Found. Generating New." & vbNewLine & vbNewLine, Color.Green)
-                        ClickButtonByText("GENERATE FILE")
+                        Select Case FileType
+                            Case Enums.FileType.JSON
+                                ClickButtonByText("GENERATE JSON FILE TO DOWNLOAD")
+                            Case Enums.FileType.Excel
+                                ClickButtonByText("GENERATE EXCEL FILE TO DOWNLOAD")
+                        End Select
                     End If
                 End If
             Next

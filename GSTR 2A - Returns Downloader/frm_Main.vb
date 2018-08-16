@@ -170,7 +170,7 @@ Public Class frm_Main
         If Jobs.EditValue = 0 Then
             For Each i As ReturnsDetails In SelectedItems
                 Me.Invoke(Sub() ProgressBar.EditValue += 1)
-                RequestGSTR(i.Month, i.Year, Me)
+                RequestGSTR(i.Month, i.Year, Types.EditValue, Me)
             Next
         ElseIf Jobs.EditValue = 1 Then
             DownloadsWatcher.Path = TempDir
@@ -178,7 +178,7 @@ Public Class frm_Main
             For Each i As ReturnsDetails In SelectedItems
                 Me.Invoke(Sub() ProgressBar.EditValue += 1)
                 CurrentMonth = i.Month
-                DownloadGSTR(i.Month, i.Year, Me)
+                DownloadGSTR(i.Month, i.Year, Types.EditValue, Me)
             Next
         End If
 
@@ -250,4 +250,5 @@ Public Class frm_Main
         Dim d As New frm_Feedback
         d.ShowDialog()
     End Sub
+
 End Class

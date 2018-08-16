@@ -113,6 +113,7 @@
     <Compile Include="Classes\Native.vb" />
     <Compile Include="Classes\RestAPI.vb" />
     <Compile Include="Classes\WebDriver.vb" />
+    <Compile Include="Enums\FileType.vb" />
     <Compile Include="frm_About.designer.vb">
       <DependentUpon>frm_About.vb</DependentUpon>
     </Compile>
