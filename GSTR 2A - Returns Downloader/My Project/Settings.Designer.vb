@@ -89,6 +89,18 @@ Namespace My
                 Me("FirstRun") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property FireFoxLocation() As String
+            Get
+                Return CType(Me("FireFoxLocation"),String)
+            End Get
+            Set
+                Me("FireFoxLocation") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

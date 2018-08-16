@@ -44,6 +44,11 @@ Namespace Classes
             FirefoxOpt.Profile.SetPreference("browser.download.dir", DownloadDir)
             FirefoxOpt.Profile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/zip")
             FirefoxOpt.AcceptInsecureCertificates = True
+
+            If My.Settings.FireFoxLocation <> "" AndAlso My.Computer.FileSystem.FileExists(My.Settings.FireFoxLocation) Then
+                FirefoxOpt.BrowserExecutableLocation = My.Settings.FireFoxLocation
+            End If
+
             Dim driverservice As FirefoxDriverService = FirefoxDriverService.CreateDefaultService(GetDriverPath)
             driverservice.HideCommandPromptWindow = True
             Try

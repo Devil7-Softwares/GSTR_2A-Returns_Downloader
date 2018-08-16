@@ -69,6 +69,7 @@ Partial Class frm_Main
         Me.btn_FeedBack = New DevExpress.XtraEditors.SimpleButton()
         Me.grp_Type = New DevExpress.XtraEditors.GroupControl()
         Me.Types = New DevExpress.XtraEditors.RadioGroup()
+        Me.btn_Settings = New DevExpress.XtraEditors.SimpleButton()
         CType(Me.grp_Credential, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Credential.SuspendLayout()
         CType(Me.txt_Password.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -293,25 +294,25 @@ Partial Class frm_Main
         '
         'btn_About
         '
-        Me.btn_About.Location = New System.Drawing.Point(232, 539)
+        Me.btn_About.Location = New System.Drawing.Point(255, 539)
         Me.btn_About.Name = "btn_About"
-        Me.btn_About.Size = New System.Drawing.Size(75, 23)
+        Me.btn_About.Size = New System.Drawing.Size(52, 23)
         Me.btn_About.TabIndex = 17
         Me.btn_About.Text = "About"
         '
         'btn_Update
         '
-        Me.btn_Update.Location = New System.Drawing.Point(12, 539)
+        Me.btn_Update.Location = New System.Drawing.Point(71, 539)
         Me.btn_Update.Name = "btn_Update"
-        Me.btn_Update.Size = New System.Drawing.Size(75, 23)
+        Me.btn_Update.Size = New System.Drawing.Size(55, 23)
         Me.btn_Update.TabIndex = 18
         Me.btn_Update.Text = "Update"
         '
         'btn_FeedBack
         '
-        Me.btn_FeedBack.Location = New System.Drawing.Point(93, 539)
+        Me.btn_FeedBack.Location = New System.Drawing.Point(132, 539)
         Me.btn_FeedBack.Name = "btn_FeedBack"
-        Me.btn_FeedBack.Size = New System.Drawing.Size(133, 23)
+        Me.btn_FeedBack.Size = New System.Drawing.Size(117, 23)
         Me.btn_FeedBack.TabIndex = 19
         Me.btn_FeedBack.Text = "Support / Feedback"
         '
@@ -336,10 +337,19 @@ Partial Class frm_Main
         Me.Types.Size = New System.Drawing.Size(86, 60)
         Me.Types.TabIndex = 2
         '
+        'btn_Settings
+        '
+        Me.btn_Settings.Location = New System.Drawing.Point(12, 539)
+        Me.btn_Settings.Name = "btn_Settings"
+        Me.btn_Settings.Size = New System.Drawing.Size(53, 23)
+        Me.btn_Settings.TabIndex = 21
+        Me.btn_Settings.Text = "Settings"
+        '
         'frm_Main
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
         Me.ClientSize = New System.Drawing.Size(319, 570)
+        Me.Controls.Add(Me.btn_Settings)
         Me.Controls.Add(Me.grp_Type)
         Me.Controls.Add(Me.btn_FeedBack)
         Me.Controls.Add(Me.btn_Update)
@@ -410,4 +420,5 @@ Partial Class frm_Main
     Friend WithEvents btn_Update As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents grp_Type As DevExpress.XtraEditors.GroupControl
     Friend WithEvents Types As DevExpress.XtraEditors.RadioGroup
+    Friend WithEvents btn_Settings As DevExpress.XtraEditors.SimpleButton
 End Class

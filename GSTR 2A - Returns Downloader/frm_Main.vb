@@ -92,9 +92,21 @@ Public Class frm_Main
     End Sub
 #End Region
 
+    Sub FindFirefox()
+        On Error Resume Next
+        For Each i As String In My.Computer.FileSystem.GetFiles(Application.StartupPath, FileIO.SearchOption.SearchAllSubDirectories, "firefox.exe")
+            My.Settings.FireFoxLocation = i
+            My.Settings.Save()
+            Exit For
+        Next
+    End Sub
+
     Private Sub frm_Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         gc_Months.DataSource = Classes.MiscFunctions.GetAssessmentMonths
         LoadSettings()
+        If My.Settings.FireFoxLocation = "" OrElse My.Computer.FileSystem.FileExists(My.Settings.FireFoxLocation) Then
+            FindFireFox()
+        End If
     End Sub
 
     Private Sub txt_DownloadsLocation_ButtonClick(sender As Object, e As ButtonPressedEventArgs) Handles txt_DownloadsLocation.ButtonClick
@@ -248,6 +260,11 @@ Public Class frm_Main
 
     Private Sub btn_FeedBack_Click(sender As Object, e As EventArgs) Handles btn_FeedBack.Click
         Dim d As New frm_Feedback
+        d.ShowDialog()
+    End Sub
+
+    Private Sub btn_Settings_Click(sender As Object, e As EventArgs) Handles btn_Settings.Click
+        Dim d As New frm_Settings
         d.ShowDialog()
     End Sub
 
