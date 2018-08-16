@@ -120,6 +120,16 @@ Public Class frm_Main
     End Sub
 
     Private Sub btn_Start_Click(sender As Object, e As EventArgs) Handles btn_Start.Click
+        If txt_LoginID.Text.Trim = "" Then
+            MsgBox("Login ID cannot be empty...!", MsgBoxStyle.Exclamation + MsgBoxStyle.OkOnly, "Error")
+            Exit Sub
+        End If
+
+        If txt_Password.Text.Trim = "" Then
+            MsgBox("Password cannot be empty...!", MsgBoxStyle.Exclamation + MsgBoxStyle.OkOnly, "Error")
+            Exit Sub
+        End If
+
         SelectedItems = New List(Of ReturnsDetails)
         For Each i As ReturnsDetails In CType(gc_Months.DataSource, List(Of ReturnsDetails))
             If i.Process Then SelectedItems.Add(i)
