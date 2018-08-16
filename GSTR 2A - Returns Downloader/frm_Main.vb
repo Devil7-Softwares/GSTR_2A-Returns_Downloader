@@ -59,6 +59,7 @@ Public Class frm_Main
                       grp_Downloads.Enabled = True
                       grp_Jobs.Enabled = True
                       grp_Months.Enabled = True
+                      grp_Type.Enabled = True
                       btn_Start.Enabled = True
                       btn_Stop.Enabled = False
                       btn_Stop.Visible = False
@@ -72,6 +73,7 @@ Public Class frm_Main
                       grp_Downloads.Enabled = False
                       grp_Jobs.Enabled = False
                       grp_Months.Enabled = False
+                      grp_Type.Enabled = False
                       btn_Start.Enabled = False
                       btn_Stop.Enabled = True
                       btn_Stop.Visible = True
