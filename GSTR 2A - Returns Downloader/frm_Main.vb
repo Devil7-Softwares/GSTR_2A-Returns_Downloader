@@ -33,7 +33,6 @@ Public Class frm_Main
     Dim StoreDir As String
 
     Dim CurrentMonth As String = ""
-    Dim Files2Move As New List(Of File)
 
     Dim SelectedItems As List(Of ReturnsDetails)
 
@@ -197,8 +196,6 @@ Public Class frm_Main
                 RequestGSTR(i.Month, i.Year, Types.EditValue, Me)
             Next
         ElseIf Jobs.EditValue = 1 Then
-            DownloadsWatcher.Path = TempDir
-            DownloadsWatcher.EnableRaisingEvents = True
             For Each i As ReturnsDetails In SelectedItems
                 Me.Invoke(Sub() ProgressBar.EditValue += 1)
                 CurrentMonth = i.Month
@@ -208,11 +205,13 @@ Public Class frm_Main
 
         Write2Console("Logging Out..." & vbNewLine & vbNewLine, Color.Yellow)
         Driver.Navigate().GoToUrl("https://services.gst.gov.in/services/logout")
-        DownloadsWatcher.EnableRaisingEvents = False
         Write2Console("Moving Files. Please Wait..." & vbNewLine & vbNewLine, Color.Yellow)
-        For Each i As File In Files2Move
-            Write2Console("Moving File of " & i.Month & "..." & vbNewLine & vbNewLine, Color.Green)
-            i.Move()
+        For Each i As String In My.Computer.FileSystem.GetFiles(TempDir)
+            Dim Month As String = Classes.MiscFunctions.GetMonth(i)
+            Write2Console("Moving File of " & Month & "..." & vbNewLine & vbNewLine, Color.Green)
+            Dim S As String() = IO.Path.GetFileNameWithoutExtension(i).Split("_")
+            Dim DestName As String = String.Format("{0}_{1}_{2}_{3}_{4}.zip", S(0), S(1), S(2), S(3), Month.Substring(0, 3).ToUpper)
+            My.Computer.FileSystem.MoveFile(i, IO.Path.Combine(StoreDir, DestName))
         Next
         Write2Console("Process Completed... :-)" & vbNewLine & vbNewLine, Color.Green)
         EnableControls()
@@ -231,15 +230,6 @@ Public Class frm_Main
         End If
         If Driver IsNot Nothing Then Driver.Close()
         Classes.MiscFunctions.KillGeckoProcesses()
-    End Sub
-
-    Private Sub DownloadsWatcher_Created(sender As Object, e As IO.FileSystemEventArgs) Handles DownloadsWatcher.Created
-        Dim S As String() = IO.Path.GetFileNameWithoutExtension(e.FullPath).Split("_")
-        Dim DestName As String = String.Format("{0}_{1}_{2}_{3}_{4}.zip", S(0), S(1), S(2), S(3), CurrentMonth.Substring(0, 3).ToUpper)
-        txt_Console.Focus()
-        txt_Console.AppendText(CurrentMonth & " - File Found." & IO.Path.GetFileName(e.FullPath) & vbNewLine)
-        txt_Console.AppendText("Will move File to " & DestName & vbNewLine)
-        Files2Move.Add(New File(CurrentMonth, e.FullPath, IO.Path.Combine(StoreDir, DestName)))
     End Sub
 
     Private Sub frm_Main_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing

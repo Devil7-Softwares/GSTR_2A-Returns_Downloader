@@ -63,7 +63,6 @@ Partial Class frm_Main
         Me.SelectDownloadsDialog = New System.Windows.Forms.FolderBrowserDialog()
         Me.Worker = New System.ComponentModel.BackgroundWorker()
         Me.ProgressBar = New DevExpress.XtraEditors.ProgressBarControl()
-        Me.DownloadsWatcher = New System.IO.FileSystemWatcher()
         Me.btn_About = New DevExpress.XtraEditors.SimpleButton()
         Me.btn_Update = New DevExpress.XtraEditors.SimpleButton()
         Me.btn_FeedBack = New DevExpress.XtraEditors.SimpleButton()
@@ -89,7 +88,6 @@ Partial Class frm_Main
         CType(Me.grp_Console, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Console.SuspendLayout()
         CType(Me.ProgressBar.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DownloadsWatcher, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.grp_Type, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Type.SuspendLayout()
         CType(Me.Types.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -284,12 +282,6 @@ Partial Class frm_Main
         Me.ProgressBar.Size = New System.Drawing.Size(295, 11)
         Me.ProgressBar.TabIndex = 16
         '
-        'DownloadsWatcher
-        '
-        Me.DownloadsWatcher.EnableRaisingEvents = True
-        Me.DownloadsWatcher.Filter = "returns_*_R2A_*_R2A_others_*.zip"
-        Me.DownloadsWatcher.SynchronizingObject = Me
-        '
         'btn_About
         '
         Me.btn_About.Location = New System.Drawing.Point(255, 539)
@@ -384,7 +376,6 @@ Partial Class frm_Main
         CType(Me.grp_Console, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_Console.ResumeLayout(False)
         CType(Me.ProgressBar.Properties, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DownloadsWatcher, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.grp_Type, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_Type.ResumeLayout(False)
         CType(Me.Types.Properties, System.ComponentModel.ISupportInitialize).EndInit()
@@ -412,7 +403,6 @@ Partial Class frm_Main
     Friend WithEvents SelectDownloadsDialog As FolderBrowserDialog
     Friend WithEvents Worker As System.ComponentModel.BackgroundWorker
     Friend WithEvents ProgressBar As DevExpress.XtraEditors.ProgressBarControl
-    Friend WithEvents DownloadsWatcher As IO.FileSystemWatcher
     Friend WithEvents btn_About As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents btn_FeedBack As DevExpress.XtraEditors.SimpleButton
     Friend WithEvents btn_Update As DevExpress.XtraEditors.SimpleButton

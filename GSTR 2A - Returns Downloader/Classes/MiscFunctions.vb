@@ -87,5 +87,28 @@ Namespace Classes
             Next
         End Sub
 
+        Function GetMonth(ByVal ZipPath As String) As String
+            Dim Zip As New Ionic.Zip.ZipFile(ZipPath)
+            Try
+                For Each i As Ionic.Zip.ZipEntry In Zip.Entries
+                    If i.FileName.ToLower.EndsWith(".json") Then
+                        Using stream As New IO.MemoryStream
+                            i.Extract(stream)
+                            Try
+                                Dim DateValue As String = Newtonsoft.Json.Linq.JObject.Parse(Text.Encoding.ASCII.GetString(stream.ToArray)).SelectToken("fp")
+                                Dim Month As Integer = CInt(DateValue.Substring(0, 2))
+                                Return DateAndTime.MonthName(Month)
+                            Catch ex As Exception
+                            End Try
+                        End Using
+                    End If
+                Next
+            Catch ex As Exception
+            Finally
+                Zip.Dispose()
+            End Try
+            Return ""
+        End Function
+
     End Module
 End Namespace
