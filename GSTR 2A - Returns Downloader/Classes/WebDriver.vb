@@ -101,32 +101,32 @@ Click:
         End Sub
 
         Sub DownloadGSTR(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
-            Threading.Thread.Sleep(5000)
+            Threading.Thread.Sleep(2000)
 
             Owner.Write2Console("Filling Year & Month..." & vbNewLine & vbNewLine, Color.Yellow)
             Dim Year_ = Driver.FindElement(By.Name("fin"))
-            Year_.SendKeys(Year)
-            Threading.Thread.Sleep(1000)
+            SelectValue(Year_, Year)
+            Threading.Thread.Sleep(500)
             Dim Month_ = Driver.FindElement(By.Name("mon"))
-            Month_.SendKeys(Month)
-            Threading.Thread.Sleep(1000)
+            SelectValue(Month_, Month)
+            Threading.Thread.Sleep(2000)
 
             Owner.Write2Console("Searching for returns..." & vbNewLine & vbNewLine, Color.Yellow)
             ClickButtonByText("SEARCH")
             Threading.Thread.Sleep(2000)
 
             Owner.Write2Console("Sending download request...", Color.Yellow)
+            ClickButtonByText("DOWNLOAD")
+            WaitForLoad(Owner)
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Sending generate file request..." & vbNewLine & vbNewLine, Color.Yellow)
             Select Case FileType
                 Case Enums.FileType.JSON
                     ClickButtonByText("GENERATE JSON FILE TO DOWNLOAD")
                 Case Enums.FileType.Excel
                     ClickButtonByText("GENERATE EXCEL FILE TO DOWNLOAD")
             End Select
-            WaitForLoad(Owner)
-            Threading.Thread.Sleep(2000)
-
-            Owner.Write2Console("Sending generate file request..." & vbNewLine & vbNewLine, Color.Yellow)
-            ClickButtonByText("GENERATE FILE")
             Threading.Thread.Sleep(3000)
 
             Owner.Write2Console("Processing response..." & vbNewLine, Color.Yellow)
@@ -138,7 +138,7 @@ Click:
                         Owner.Write2Console(Month & " - Generation is in progress" & vbNewLine & vbNewLine, Color.Green)
                     ElseIf i.Text.Contains("click on generate file again") Or i.Text.Contains("click on the download button again") Then
                         For Each link As IWebElement In Driver.FindElements(By.TagName("a"))
-                            If link.Text.Contains("Click here to download - File 1") Then
+                            If link.Text.Contains("Click here to download ") Then
                                 Owner.Write2Console(Month & " - File Found. Downloading." & vbNewLine & vbNewLine, Color.Green)
                                 link.Click()
                             End If
@@ -153,15 +153,15 @@ Click:
             Threading.Thread.Sleep(3000)
         End Sub
         Sub RequestGSTR(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
-            Threading.Thread.Sleep(5000)
+            Threading.Thread.Sleep(2000)
 
             Owner.Write2Console("Filling Year & Month..." & vbNewLine & vbNewLine, Color.Yellow)
             Dim Year_ = Driver.FindElement(By.Name("fin"))
-            Year_.SendKeys(Year)
-            Threading.Thread.Sleep(1000)
+            SelectValue(Year_, Year)
+            Threading.Thread.Sleep(500)
             Dim Month_ = Driver.FindElement(By.Name("mon"))
-            Month_.SendKeys(Month)
-            Threading.Thread.Sleep(1000)
+            SelectValue(Month_, Month)
+            Threading.Thread.Sleep(2000)
 
             Owner.Write2Console("Searching for returns..." & vbNewLine & vbNewLine, Color.Yellow)
             ClickButtonByText("SEARCH")
@@ -204,6 +204,15 @@ Click:
             Owner.Write2Console("Going back to previous page..." & vbNewLine & vbNewLine, Color.Yellow)
             ClickButtonByText("BACK")
             Threading.Thread.Sleep(3000)
+        End Sub
+
+        Sub SelectValue(ByVal SelectElement As IWebElement, ByVal Value As String)
+            For Each i As IWebElement In SelectElement.FindElements(By.TagName("option"))
+                If i.GetAttribute("label") = Value Then
+                    i.Click()
+                    Exit For
+                End If
+            Next
         End Sub
 
     End Module
