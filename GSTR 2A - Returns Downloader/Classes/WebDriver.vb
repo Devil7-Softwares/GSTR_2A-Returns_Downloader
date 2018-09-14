@@ -28,7 +28,18 @@ Namespace Classes
 
         Public Driver As FirefoxDriver
 
-        Function StartDriver(ByVal DownloadDir As String) As Boolean
+        Function GetMimeType(ByVal Type As Integer)
+            Select Case Type
+                Case 0
+                    Return "application/zip"
+                Case 1
+                    Return "application/excel"
+                Case 2
+                    Return "application/pdf"
+            End Select
+        End Function
+
+        Function StartDriver(ByVal DownloadDir As String, ByVal FileType As Integer ) As Boolean
             If Driver IsNot Nothing Then
                 Try
                     Driver.Close()
@@ -42,7 +53,9 @@ Namespace Classes
             FirefoxOpt.Profile.AcceptUntrustedCertificates = True
             FirefoxOpt.Profile.SetPreference("browser.download.folderList", 2)
             FirefoxOpt.Profile.SetPreference("browser.download.dir", DownloadDir)
-            FirefoxOpt.Profile.SetPreference("browser.helperApps.neverAsk.saveToDisk", "application/zip")
+            FirefoxOpt.Profile.SetPreference("browser.helperApps.neverAsk.saveToDisk", GetMimeType(FileType))
+            FirefoxOpt.Profile.SetPreference("plugin.disable_full_page_plugin_for_types", "application/pdf")
+            FirefoxOpt.Profile.SetPreference("pdfjs.disabled", True)
             FirefoxOpt.AcceptInsecureCertificates = True
 
             If My.Settings.FireFoxLocation <> "" AndAlso My.Computer.FileSystem.FileExists(My.Settings.FireFoxLocation) Then
@@ -81,14 +94,19 @@ Namespace Classes
             End Try
         End Function
 
-        Sub ClickButtonByText(ByVal BtnName As String)
-            For Each i As IWebElement In Driver.FindElements(By.TagName("button"))
+        Function ClickButtonByText(ByVal BtnName As String) As Boolean
+            Return ClickButtonByText(BtnName, Driver)
+        End Function
+
+        Function ClickButtonByText(ByVal BtnName As String, ByVal Parent As Object) As Boolean
+            For Each i As IWebElement In Parent.FindElements(By.TagName("button"))
                 If i.Text = BtnName Then
                     Dim tries As Integer = 0
 Click:
                     tries += 1
                     Try
                         i.Click()
+                        Return True
                     Catch ex As InvalidOperationException
                         If tries < 11 Then
                             Threading.Thread.Sleep(1000)
@@ -98,9 +116,66 @@ Click:
                     Exit For
                 End If
             Next
+            Return False
+        End Function
+
+        Function ViewGSTR3B()
+            For Each i As IWebElement In Driver.FindElements(By.TagName("div"))
+                If i.Text.Contains("GSTR3B") AndAlso Not i.Text.Contains("GSTR1") AndAlso Not i.Text.Contains("GSTR2A") Then
+                    If i.Text.Contains("Filed") And i.Text.Contains("VIEW") Then
+                        For Each b As IWebElement In i.FindElements(By.TagName("button"))
+                            If b.Text = "VIEW" AndAlso b.GetAttribute("data-ng-click") = "page_rtp(x.return_ty,x.due_dt,x.status)" Then
+                                Dim tries As Integer = 0
+Click:
+                                tries += 1
+                                Try
+                                    b.Click()
+                                    Return True
+                                Catch ex As InvalidOperationException
+                                    If tries < 11 Then
+                                        Threading.Thread.Sleep(1000)
+                                        GoTo Click
+                                    End If
+                                End Try
+                                Exit For
+                            End If
+                        Next
+                    Else
+                        Return False
+                    End If
+                    Exit For
+                End If
+            Next
+            Return True
+        End Function
+
+        Sub SetAttribute(ByVal element As IWebElement, ByVal attName As String, ByVal attValue As String)
+            Driver.ExecuteScript("arguments[0].setAttribute(arguments[1], arguments[2]);", element, attName, attValue)
         End Sub
 
-        Sub DownloadGSTR(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
+        Function HideAllDialogs() As Boolean
+            For Each b As IWebElement In Driver.FindElements(By.TagName("button"))
+                If b.Text = "OK" AndAlso b.GetAttribute("data-dismiss") = "modal" Then
+                    Dim tries As Integer = 0
+Click:
+                    tries += 1
+                    Try
+                        b.Click()
+                        Threading.Thread.Sleep(3000)
+                        Return True
+                    Catch ex As InvalidOperationException
+                        If tries < 11 Then
+                            Threading.Thread.Sleep(1000)
+                            GoTo Click
+                        End If
+                    End Try
+                    Exit For
+                End If
+            Next
+            Return False
+        End Function
+
+        Sub DownloadGSTR2A(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
             Threading.Thread.Sleep(2000)
 
             Owner.Write2Console("Filling Year & Month..." & vbNewLine & vbNewLine, Color.Yellow)
@@ -152,7 +227,7 @@ Click:
             ClickButtonByText("BACK")
             Threading.Thread.Sleep(3000)
         End Sub
-        Sub RequestGSTR(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
+        Sub RequestGSTR2A(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
             Threading.Thread.Sleep(2000)
 
             Owner.Write2Console("Filling Year & Month..." & vbNewLine & vbNewLine, Color.Yellow)
@@ -200,6 +275,47 @@ Click:
                 End If
             Next
             Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Going back to previous page..." & vbNewLine & vbNewLine, Color.Yellow)
+            ClickButtonByText("BACK")
+            Threading.Thread.Sleep(3000)
+        End Sub
+
+        Sub DownloadGSTR3B(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Filling Year & Month..." & vbNewLine & vbNewLine, Color.Yellow)
+            Dim Year_ = Driver.FindElement(By.Name("fin"))
+            SelectValue(Year_, Year)
+            Threading.Thread.Sleep(500)
+            Dim Month_ = Driver.FindElement(By.Name("mon"))
+            SelectValue(Month_, Month)
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Searching for returns..." & vbNewLine & vbNewLine, Color.Yellow)
+            ClickButtonByText("SEARCH")
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Sending download request...", Color.Yellow)
+            If Not ViewGSTR3B() Then
+                Owner.Write2Console("GSTR 3B Not Filed for " & Month & vbNewLine, Color.Red)
+                Exit Sub
+            End If
+            Do Until Driver.Url = "https://return.gst.gov.in/returns/auth/gstr3b"
+                Threading.Thread.Sleep(1000)
+            Loop
+            WaitForLoad(Owner)
+            Threading.Thread.Sleep(2000)
+
+            HideAllDialogs()
+
+            Owner.Write2Console("Downloading GSTR3B...", Color.Green)
+            If ClickButtonByText("DOWNLOAD FILED GSTR-3B") Then
+                Owner.Write2Console("Done...", Color.Green)
+            Else
+                Owner.Write2Console("Failed...", Color.Red)
+            End If
+            Threading.Thread.Sleep(10000)
 
             Owner.Write2Console("Going back to previous page..." & vbNewLine & vbNewLine, Color.Yellow)
             ClickButtonByText("BACK")

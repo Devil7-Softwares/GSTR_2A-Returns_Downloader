@@ -69,6 +69,8 @@ Partial Class frm_Main
         Me.grp_Type = New DevExpress.XtraEditors.GroupControl()
         Me.Types = New DevExpress.XtraEditors.RadioGroup()
         Me.btn_Settings = New DevExpress.XtraEditors.SimpleButton()
+        Me.grp_Returns = New DevExpress.XtraEditors.GroupControl()
+        Me.Returns = New DevExpress.XtraEditors.RadioGroup()
         CType(Me.grp_Credential, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Credential.SuspendLayout()
         CType(Me.txt_Password.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -91,6 +93,9 @@ Partial Class frm_Main
         CType(Me.grp_Type, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.grp_Type.SuspendLayout()
         CType(Me.Types.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.grp_Returns, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.grp_Returns.SuspendLayout()
+        CType(Me.Returns.Properties, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'grp_Credential
@@ -103,7 +108,7 @@ Partial Class frm_Main
         Me.grp_Credential.Controls.Add(Me.lbl_LoginID)
         Me.grp_Credential.Location = New System.Drawing.Point(12, 12)
         Me.grp_Credential.Name = "grp_Credential"
-        Me.grp_Credential.Size = New System.Drawing.Size(295, 79)
+        Me.grp_Credential.Size = New System.Drawing.Size(278, 79)
         Me.grp_Credential.TabIndex = 0
         Me.grp_Credential.Text = "Credentials"
         '
@@ -115,7 +120,7 @@ Partial Class frm_Main
         Me.txt_Password.Location = New System.Drawing.Point(91, 52)
         Me.txt_Password.Name = "txt_Password"
         Me.txt_Password.Properties.UseSystemPasswordChar = True
-        Me.txt_Password.Size = New System.Drawing.Size(199, 20)
+        Me.txt_Password.Size = New System.Drawing.Size(182, 20)
         Me.txt_Password.TabIndex = 1
         '
         'txt_LoginID
@@ -125,7 +130,7 @@ Partial Class frm_Main
         Me.txt_LoginID.EditValue = ""
         Me.txt_LoginID.Location = New System.Drawing.Point(91, 24)
         Me.txt_LoginID.Name = "txt_LoginID"
-        Me.txt_LoginID.Size = New System.Drawing.Size(199, 20)
+        Me.txt_LoginID.Size = New System.Drawing.Size(182, 20)
         Me.txt_LoginID.TabIndex = 0
         '
         'LabelControl2
@@ -149,9 +154,9 @@ Partial Class frm_Main
         Me.grp_Jobs.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grp_Jobs.Controls.Add(Me.Jobs)
-        Me.grp_Jobs.Location = New System.Drawing.Point(12, 97)
+        Me.grp_Jobs.Location = New System.Drawing.Point(73, 97)
         Me.grp_Jobs.Name = "grp_Jobs"
-        Me.grp_Jobs.Size = New System.Drawing.Size(142, 82)
+        Me.grp_Jobs.Size = New System.Drawing.Size(81, 82)
         Me.grp_Jobs.TabIndex = 9
         Me.grp_Jobs.Text = "Job"
         '
@@ -161,8 +166,8 @@ Partial Class frm_Main
         Me.Jobs.EditValue = 0
         Me.Jobs.Location = New System.Drawing.Point(2, 20)
         Me.Jobs.Name = "Jobs"
-        Me.Jobs.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(0, "Generate Download"), New DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Download File")})
-        Me.Jobs.Size = New System.Drawing.Size(138, 60)
+        Me.Jobs.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(0, "Generate"), New DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Download")})
+        Me.Jobs.Size = New System.Drawing.Size(77, 60)
         Me.Jobs.TabIndex = 2
         '
         'btn_Start
@@ -171,7 +176,7 @@ Partial Class frm_Main
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Start.Location = New System.Drawing.Point(5, 23)
         Me.btn_Start.Name = "btn_Start"
-        Me.btn_Start.Size = New System.Drawing.Size(71, 24)
+        Me.btn_Start.Size = New System.Drawing.Size(52, 24)
         Me.btn_Start.TabIndex = 3
         Me.btn_Start.Text = "Start"
         '
@@ -180,9 +185,9 @@ Partial Class frm_Main
         Me.grp_Process.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grp_Process.Controls.Add(Me.btn_Stop)
         Me.grp_Process.Controls.Add(Me.btn_Start)
-        Me.grp_Process.Location = New System.Drawing.Point(226, 97)
+        Me.grp_Process.Location = New System.Drawing.Point(228, 97)
         Me.grp_Process.Name = "grp_Process"
-        Me.grp_Process.Size = New System.Drawing.Size(81, 82)
+        Me.grp_Process.Size = New System.Drawing.Size(62, 82)
         Me.grp_Process.TabIndex = 11
         Me.grp_Process.Text = "Process"
         '
@@ -192,7 +197,7 @@ Partial Class frm_Main
             Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.btn_Stop.Location = New System.Drawing.Point(5, 53)
         Me.btn_Stop.Name = "btn_Stop"
-        Me.btn_Stop.Size = New System.Drawing.Size(71, 24)
+        Me.btn_Stop.Size = New System.Drawing.Size(52, 24)
         Me.btn_Stop.TabIndex = 5
         Me.btn_Stop.Text = "Stop"
         Me.btn_Stop.Visible = False
@@ -205,7 +210,7 @@ Partial Class frm_Main
         Me.grp_Months.Controls.Add(Me.gc_Months)
         Me.grp_Months.Location = New System.Drawing.Point(12, 251)
         Me.grp_Months.Name = "grp_Months"
-        Me.grp_Months.Size = New System.Drawing.Size(295, 169)
+        Me.grp_Months.Size = New System.Drawing.Size(278, 169)
         Me.grp_Months.TabIndex = 12
         Me.grp_Months.Text = "Months"
         '
@@ -215,7 +220,7 @@ Partial Class frm_Main
         Me.gc_Months.Location = New System.Drawing.Point(2, 20)
         Me.gc_Months.MainView = Me.gv_Months
         Me.gc_Months.Name = "gc_Months"
-        Me.gc_Months.Size = New System.Drawing.Size(291, 147)
+        Me.gc_Months.Size = New System.Drawing.Size(274, 147)
         Me.gc_Months.TabIndex = 0
         Me.gc_Months.ViewCollection.AddRange(New DevExpress.XtraGrid.Views.Base.BaseView() {Me.gv_Months})
         '
@@ -227,10 +232,12 @@ Partial Class frm_Main
         '
         'grp_Downloads
         '
+        Me.grp_Downloads.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grp_Downloads.Controls.Add(Me.txt_DownloadsLocation)
         Me.grp_Downloads.Location = New System.Drawing.Point(12, 202)
         Me.grp_Downloads.Name = "grp_Downloads"
-        Me.grp_Downloads.Size = New System.Drawing.Size(295, 43)
+        Me.grp_Downloads.Size = New System.Drawing.Size(278, 43)
         Me.grp_Downloads.TabIndex = 14
         Me.grp_Downloads.Text = "Downloads Location"
         '
@@ -241,7 +248,7 @@ Partial Class frm_Main
         Me.txt_DownloadsLocation.Name = "txt_DownloadsLocation"
         Me.txt_DownloadsLocation.Properties.Buttons.AddRange(New DevExpress.XtraEditors.Controls.EditorButton() {New DevExpress.XtraEditors.Controls.EditorButton()})
         Me.txt_DownloadsLocation.Properties.ReadOnly = True
-        Me.txt_DownloadsLocation.Size = New System.Drawing.Size(291, 20)
+        Me.txt_DownloadsLocation.Size = New System.Drawing.Size(274, 20)
         Me.txt_DownloadsLocation.TabIndex = 0
         '
         'grp_Console
@@ -251,7 +258,7 @@ Partial Class frm_Main
         Me.grp_Console.Controls.Add(Me.txt_Console)
         Me.grp_Console.Location = New System.Drawing.Point(12, 426)
         Me.grp_Console.Name = "grp_Console"
-        Me.grp_Console.Size = New System.Drawing.Size(295, 107)
+        Me.grp_Console.Size = New System.Drawing.Size(278, 107)
         Me.grp_Console.TabIndex = 15
         Me.grp_Console.Text = "Output"
         '
@@ -263,7 +270,7 @@ Partial Class frm_Main
         Me.txt_Console.ForeColor = System.Drawing.Color.White
         Me.txt_Console.Location = New System.Drawing.Point(2, 20)
         Me.txt_Console.Name = "txt_Console"
-        Me.txt_Console.Size = New System.Drawing.Size(291, 85)
+        Me.txt_Console.Size = New System.Drawing.Size(274, 85)
         Me.txt_Console.TabIndex = 0
         Me.txt_Console.Text = ""
         '
@@ -277,16 +284,18 @@ Partial Class frm_Main
         '
         'ProgressBar
         '
+        Me.ProgressBar.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.ProgressBar.Location = New System.Drawing.Point(12, 185)
         Me.ProgressBar.Name = "ProgressBar"
-        Me.ProgressBar.Size = New System.Drawing.Size(295, 11)
+        Me.ProgressBar.Size = New System.Drawing.Size(278, 11)
         Me.ProgressBar.TabIndex = 16
         '
         'btn_About
         '
-        Me.btn_About.Location = New System.Drawing.Point(255, 539)
+        Me.btn_About.Location = New System.Drawing.Point(248, 539)
         Me.btn_About.Name = "btn_About"
-        Me.btn_About.Size = New System.Drawing.Size(52, 23)
+        Me.btn_About.Size = New System.Drawing.Size(42, 23)
         Me.btn_About.TabIndex = 17
         Me.btn_About.Text = "About"
         '
@@ -302,14 +311,13 @@ Partial Class frm_Main
         '
         Me.btn_FeedBack.Location = New System.Drawing.Point(132, 539)
         Me.btn_FeedBack.Name = "btn_FeedBack"
-        Me.btn_FeedBack.Size = New System.Drawing.Size(117, 23)
+        Me.btn_FeedBack.Size = New System.Drawing.Size(110, 23)
         Me.btn_FeedBack.TabIndex = 19
         Me.btn_FeedBack.Text = "Support / Feedback"
         '
         'grp_Type
         '
-        Me.grp_Type.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.grp_Type.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.grp_Type.Controls.Add(Me.Types)
         Me.grp_Type.Location = New System.Drawing.Point(160, 97)
         Me.grp_Type.Name = "grp_Type"
@@ -323,7 +331,7 @@ Partial Class frm_Main
         Me.Types.EditValue = 0
         Me.Types.Location = New System.Drawing.Point(2, 20)
         Me.Types.Name = "Types"
-        Me.Types.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(0, "JSON"), New DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Excel")})
+        Me.Types.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(0, "JSON"), New DevExpress.XtraEditors.Controls.RadioGroupItem(1, "Excel"), New DevExpress.XtraEditors.Controls.RadioGroupItem(2, "PDF")})
         Me.Types.Size = New System.Drawing.Size(58, 60)
         Me.Types.TabIndex = 2
         '
@@ -335,10 +343,30 @@ Partial Class frm_Main
         Me.btn_Settings.TabIndex = 21
         Me.btn_Settings.Text = "Settings"
         '
+        'grp_Returns
+        '
+        Me.grp_Returns.Controls.Add(Me.Returns)
+        Me.grp_Returns.Location = New System.Drawing.Point(12, 97)
+        Me.grp_Returns.Name = "grp_Returns"
+        Me.grp_Returns.Size = New System.Drawing.Size(57, 82)
+        Me.grp_Returns.TabIndex = 22
+        Me.grp_Returns.Text = "Return"
+        '
+        'Returns
+        '
+        Me.Returns.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.Returns.EditValue = -1
+        Me.Returns.Location = New System.Drawing.Point(2, 20)
+        Me.Returns.Name = "Returns"
+        Me.Returns.Properties.Items.AddRange(New DevExpress.XtraEditors.Controls.RadioGroupItem() {New DevExpress.XtraEditors.Controls.RadioGroupItem(0, "2A"), New DevExpress.XtraEditors.Controls.RadioGroupItem(1, "3B")})
+        Me.Returns.Size = New System.Drawing.Size(53, 60)
+        Me.Returns.TabIndex = 23
+        '
         'frm_Main
         '
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None
-        Me.ClientSize = New System.Drawing.Size(319, 570)
+        Me.ClientSize = New System.Drawing.Size(302, 570)
+        Me.Controls.Add(Me.grp_Returns)
         Me.Controls.Add(Me.btn_Settings)
         Me.Controls.Add(Me.grp_Type)
         Me.Controls.Add(Me.btn_FeedBack)
@@ -379,6 +407,9 @@ Partial Class frm_Main
         CType(Me.grp_Type, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_Type.ResumeLayout(False)
         CType(Me.Types.Properties, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.grp_Returns, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.grp_Returns.ResumeLayout(False)
+        CType(Me.Returns.Properties, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
 
     End Sub
@@ -409,4 +440,6 @@ Partial Class frm_Main
     Friend WithEvents grp_Type As DevExpress.XtraEditors.GroupControl
     Friend WithEvents Types As DevExpress.XtraEditors.RadioGroup
     Friend WithEvents btn_Settings As DevExpress.XtraEditors.SimpleButton
+    Friend WithEvents grp_Returns As DevExpress.XtraEditors.GroupControl
+    Friend WithEvents Returns As DevExpress.XtraEditors.RadioGroup
 End Class

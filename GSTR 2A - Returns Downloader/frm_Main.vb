@@ -56,6 +56,7 @@ Public Class frm_Main
         Me.Invoke(Sub()
                       grp_Credential.Enabled = True
                       grp_Downloads.Enabled = True
+                      grp_Returns.Enabled = True
                       grp_Jobs.Enabled = True
                       grp_Months.Enabled = True
                       grp_Type.Enabled = True
@@ -70,6 +71,7 @@ Public Class frm_Main
         Me.Invoke(Sub()
                       grp_Credential.Enabled = False
                       grp_Downloads.Enabled = False
+                      grp_Returns.Enabled = False
                       grp_Jobs.Enabled = False
                       grp_Months.Enabled = False
                       grp_Type.Enabled = False
@@ -108,6 +110,7 @@ Public Class frm_Main
         If My.Settings.FireFoxLocation = "" OrElse My.Computer.FileSystem.FileExists(My.Settings.FireFoxLocation) Then
             FindFireFox()
         End If
+        Returns.EditValue = 0
     End Sub
 
     Private Sub txt_DownloadsLocation_ButtonClick(sender As Object, e As ButtonPressedEventArgs) Handles txt_DownloadsLocation.ButtonClick
@@ -149,10 +152,18 @@ Public Class frm_Main
 
     Private Sub Worker_Login_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles Worker.DoWork
         Write2Console("Starting/Restarting Firefox Driver..." & vbNewLine & vbNewLine, Color.Yellow)
-        If Not StartDriver(TempDir) Then Exit Sub
+        If Not StartDriver(TempDir, Types.EditValue) Then Exit Sub
 
         Write2Console("Navigating to GST Login Page...", Color.Yellow)
-        Driver.Navigate().GoToUrl("https://services.gst.gov.in/services/login")
+        Dim tries As Integer = 0
+        Do Until tries >= 5
+            Try
+                Driver.Navigate().GoToUrl("https://services.gst.gov.in/services/login")
+                Exit Do
+            Catch ex As Exception
+
+            End Try
+        Loop
         WaitForLoad(Me)
         Threading.Thread.Sleep(2000)
 
@@ -185,21 +196,36 @@ Public Class frm_Main
         ClickButtonByText("RETURN DASHBOARD")
         WaitForLoad(Me)
 
+        Try
+            Do Until Driver.Url = "https://return.gst.gov.in/returns/auth/dashboard"
+                Threading.Thread.Sleep(1000)
+            Loop
+        Catch ex As Exception
+
+        End Try
+
         Me.Invoke(Sub()
                       ProgressBar.Properties.Maximum = SelectedItems.Count
                       ProgressBar.EditValue = 0
                   End Sub)
 
-        If Jobs.EditValue = 0 Then
+        If Returns.EditValue = 0 Then
+            If Jobs.EditValue = 0 Then
+                For Each i As ReturnsDetails In SelectedItems
+                    Me.Invoke(Sub() ProgressBar.EditValue += 1)
+                    RequestGSTR2A(i.Month, i.Year, Types.EditValue, Me)
+                Next
+            ElseIf Jobs.EditValue = 1 Then
+                For Each i As ReturnsDetails In SelectedItems
+                    Me.Invoke(Sub() ProgressBar.EditValue += 1)
+                    CurrentMonth = i.Month
+                    DownloadGSTR2A(i.Month, i.Year, Types.EditValue, Me)
+                Next
+            End If
+        ElseIf Returns.EditValue = 1 Then
             For Each i As ReturnsDetails In SelectedItems
                 Me.Invoke(Sub() ProgressBar.EditValue += 1)
-                RequestGSTR(i.Month, i.Year, Types.EditValue, Me)
-            Next
-        ElseIf Jobs.EditValue = 1 Then
-            For Each i As ReturnsDetails In SelectedItems
-                Me.Invoke(Sub() ProgressBar.EditValue += 1)
-                CurrentMonth = i.Month
-                DownloadGSTR(i.Month, i.Year, Types.EditValue, Me)
+                DownloadGSTR3B(i.Month, i.Year, Me)
             Next
         End If
 
@@ -207,11 +233,17 @@ Public Class frm_Main
         Driver.Navigate().GoToUrl("https://services.gst.gov.in/services/logout")
         Write2Console("Moving Files. Please Wait..." & vbNewLine & vbNewLine, Color.Yellow)
         For Each i As String In My.Computer.FileSystem.GetFiles(TempDir)
-            Dim Month As String = Classes.MiscFunctions.GetMonth(i)
-            Write2Console("Moving File of " & Month & "..." & vbNewLine & vbNewLine, Color.Green)
-            Dim S As String() = IO.Path.GetFileNameWithoutExtension(i).Split("_")
-            Dim DestName As String = String.Format("{0}_{1}_{2}_{3}_{4}.zip", S(0), S(1), S(2), S(3), Month.Substring(0, 3).ToUpper)
-            My.Computer.FileSystem.MoveFile(i, IO.Path.Combine(StoreDir, DestName))
+            If Returns.EditValue = 0 Then
+                Dim Month As String = Classes.MiscFunctions.GetMonth(i)
+                Write2Console("Moving File of " & Month & "..." & vbNewLine & vbNewLine, Color.Green)
+                Dim S As String() = IO.Path.GetFileNameWithoutExtension(i).Split("_")
+                Dim DestName As String = String.Format("{0}_{1}_{2}_{3}_{4}.zip", S(0), S(1), S(2), S(3), Month.Substring(0, 3).ToUpper)
+                My.Computer.FileSystem.MoveFile(i, IO.Path.Combine(StoreDir, DestName))
+            Else
+                Dim Dest As String = IO.Path.GetFileName(i)
+                Write2Console("Moving File """ & Dest & """..." & vbNewLine & vbNewLine, Color.Green)
+                My.Computer.FileSystem.MoveFile(i, IO.Path.Combine(StoreDir, Dest))
+            End If
         Next
         Write2Console("Process Completed... :-)" & vbNewLine & vbNewLine, Color.Green)
         EnableControls()
@@ -259,6 +291,35 @@ Public Class frm_Main
     Private Sub btn_Settings_Click(sender As Object, e As EventArgs) Handles btn_Settings.Click
         Dim d As New frm_Settings
         d.ShowDialog()
+    End Sub
+
+    Private Sub Returns_EditValueChanged(sender As Object, e As EventArgs) Handles Returns.EditValueChanged
+        Jobs.Properties.Items.Item(0).Enabled = (Returns.EditValue = 0)
+        Types.Properties.Items.Item(0).Enabled = (Returns.EditValue = 0)
+        Types.Properties.Items.Item(1).Enabled = (Returns.EditValue = 0)
+        Types.Properties.Items.Item(2).Enabled = (Returns.EditValue = 1)
+
+        Jobs.EditValue = If(Returns.EditValue = 0, 0, 1)
+        Types.EditValue = If(Returns.EditValue = 0, 0, 2)
+    End Sub
+
+    Private Sub txt_LoginID_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_LoginID.KeyDown
+        If e.Control AndAlso e.KeyCode = Windows.Forms.Keys.V Then
+            If My.Computer.Clipboard.GetText.Contains(vbTab) Then
+                Try
+                    Dim LoginID As String = My.Computer.Clipboard.GetText.Split(vbTab)(0)
+                    Dim Password As String = My.Computer.Clipboard.GetText.Split(vbTab)(1)
+                    If LoginID <> "" And Password <> "" Then
+                        Application.DoEvents()
+                        txt_LoginID.EditValue = LoginID
+                        txt_Password.Text = Password
+                        e.Handled = True
+                    End If
+                Catch ex As Exception
+
+                End Try
+            End If
+        End If
     End Sub
 
 End Class
