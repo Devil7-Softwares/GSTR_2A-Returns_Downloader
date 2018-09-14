@@ -8,8 +8,8 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("GSTR 2A - Returns Downloader")>
-<Assembly: AssemblyDescription("Simple tool to generate and download GSTR 2A Returns files from GST website.")>
+<Assembly: AssemblyTitle("GST - Returns Downloader")>
+<Assembly: AssemblyDescription("Simple tool to generate/download GST Returns files from GST website.")>
 <Assembly: AssemblyCompany("Devil7 Softwares")>
 <Assembly: AssemblyProduct("Devil7 - Automation Tools")>
 <Assembly: AssemblyCopyright("Copyright © Devil7 2018")>
@@ -31,5 +31,5 @@ Imports System.Runtime.InteropServices
 ' by using the '*' as shown below:
 ' <Assembly: AssemblyVersion("1.0.*")>
 
-<Assembly: AssemblyVersion("1.0.0.0")>
-<Assembly: AssemblyFileVersion("1.0.0.0")>
+<Assembly: AssemblyVersion("2.0.0.0")>
+<Assembly: AssemblyFileVersion("2.0.0.0")>

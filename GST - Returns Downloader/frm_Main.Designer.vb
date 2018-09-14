@@ -383,7 +383,7 @@ Partial Class frm_Main
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MaximizeBox = False
         Me.Name = "frm_Main"
-        Me.Text = "GSTR 2A - Returns Downloader"
+        Me.Text = "GST - Returns Downloader"
         CType(Me.grp_Credential, System.ComponentModel.ISupportInitialize).EndInit()
         Me.grp_Credential.ResumeLayout(False)
         Me.grp_Credential.PerformLayout()

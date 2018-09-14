@@ -260,4 +260,4 @@ paket-files/
 __pycache__/
 *.pyc
 *.licx
-/GSTR 2A - Returns Downloader/Classes/Keys.vb
+Keys.vb

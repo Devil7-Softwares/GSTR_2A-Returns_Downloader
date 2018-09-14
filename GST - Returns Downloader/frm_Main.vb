@@ -21,9 +21,9 @@
 Imports DevExpress.XtraEditors.Controls
 Imports OpenQA.Selenium
 
-Imports Devil7.Automation.GSTR2A.Downloader.Classes.WebDriver
-Imports Devil7.Automation.GSTR2A.Downloader.Classes.Native
-Imports Devil7.Automation.GSTR2A.Downloader.Objects
+Imports Devil7.Automation.GSTR.Downloader.Classes.WebDriver
+Imports Devil7.Automation.GSTR.Downloader.Classes.Native
+Imports Devil7.Automation.GSTR.Downloader.Objects
 
 Public Class frm_Main
 
