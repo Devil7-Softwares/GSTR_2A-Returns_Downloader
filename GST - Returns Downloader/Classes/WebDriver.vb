@@ -30,12 +30,12 @@ Namespace Classes
 
         Function GetMimeType(ByVal Type As Integer)
             Select Case Type
-                Case 0
+                Case 0, 1
                     Return "application/zip"
-                Case 1
-                    Return "application/excel"
                 Case 2
                     Return "application/pdf"
+                Case Else
+                    Return "application/zip"
             End Select
         End Function
 

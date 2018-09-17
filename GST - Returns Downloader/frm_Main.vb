@@ -233,7 +233,7 @@ Public Class frm_Main
         Driver.Navigate().GoToUrl("https://services.gst.gov.in/services/logout")
         Write2Console("Moving Files. Please Wait..." & vbNewLine & vbNewLine, Color.Yellow)
         For Each i As String In My.Computer.FileSystem.GetFiles(TempDir)
-            If Returns.EditValue = 0 Then
+            If Types.EditValue = 0 Then
                 Dim Month As String = Classes.MiscFunctions.GetMonth(i)
                 Write2Console("Moving File of " & Month & "..." & vbNewLine & vbNewLine, Color.Green)
                 Dim S As String() = IO.Path.GetFileNameWithoutExtension(i).Split("_")
