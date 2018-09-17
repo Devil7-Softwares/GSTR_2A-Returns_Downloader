@@ -274,7 +274,9 @@ Public Class frm_Main
     End Sub
 
     Private Sub frm_Main_Shown(sender As Object, e As EventArgs) Handles Me.Shown
-
+        Dim EmptyMenu As New ContextMenu
+        txt_LoginID.ContextMenu = EmptyMenu
+        txt_Password.ContextMenu = EmptyMenu
         If My.Settings.FirstRun Then
             My.Settings.FirstRun = False
             My.Settings.Save()
