@@ -37,7 +37,7 @@ Namespace Classes
                 For j As Integer = 0 To MonthsOrder.Count - 1
                     Dim Month As Integer = MonthsOrder(j)
                     If Year = 2017 AndAlso j > 8 Then Continue For
-                    If Year = CurrentYear AndAlso j < MonthsOrder.IndexOf(CurrentMonth) Then Continue For
+                    If Year = CurrentYear AndAlso j < MonthsOrder.IndexOf(CurrentMonth - 2) Then Continue For
 
                     R.Add(New Objects.ReturnsDetails(DateAndTime.MonthName(Month), AssessmentYear))
                 Next
