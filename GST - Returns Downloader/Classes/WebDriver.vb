@@ -116,6 +116,17 @@ Click:
                     Exit For
                 End If
             Next
+            For Each i As IWebElement In Parent.FindElements(By.TagName("a"))
+                If i.Text = BtnName AndAlso i.GetAttribute("type") = "button" Then
+                    Try
+                        i.Click()
+                        Return True
+                    Catch ex As InvalidOperationException
+
+                    End Try
+                    Exit For
+                End If
+            Next
             Return False
         End Function
 
@@ -175,10 +186,10 @@ Click:
             Return False
         End Function
 
-        Sub DownloadGSTR2A(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
+        Sub SearchReturns(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
             Threading.Thread.Sleep(2000)
-
             Owner.Write2Console("Filling Year & Month..." & vbNewLine & vbNewLine, Color.Yellow)
+
             Dim Year_ = Driver.FindElement(By.Name("fin"))
             SelectValue(Year_, Year)
             Threading.Thread.Sleep(500)
@@ -189,6 +200,10 @@ Click:
             Owner.Write2Console("Searching for returns..." & vbNewLine & vbNewLine, Color.Yellow)
             ClickButtonByText("SEARCH")
             Threading.Thread.Sleep(2000)
+        End Sub
+
+        Sub DownloadGSTR2A(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
+            SearchReturns(Month, Year, Owner)
 
             Owner.Write2Console("Sending download request...", Color.Yellow)
             ClickButtonByText("DOWNLOAD")
@@ -227,20 +242,9 @@ Click:
             ClickButtonByText("BACK")
             Threading.Thread.Sleep(3000)
         End Sub
+
         Sub RequestGSTR2A(ByVal Month As String, ByVal Year As String, ByVal FileType As Enums.FileType, ByVal Owner As frm_Main)
-            Threading.Thread.Sleep(2000)
-
-            Owner.Write2Console("Filling Year & Month..." & vbNewLine & vbNewLine, Color.Yellow)
-            Dim Year_ = Driver.FindElement(By.Name("fin"))
-            SelectValue(Year_, Year)
-            Threading.Thread.Sleep(500)
-            Dim Month_ = Driver.FindElement(By.Name("mon"))
-            SelectValue(Month_, Month)
-            Threading.Thread.Sleep(2000)
-
-            Owner.Write2Console("Searching for returns..." & vbNewLine & vbNewLine, Color.Yellow)
-            ClickButtonByText("SEARCH")
-            Threading.Thread.Sleep(2000)
+            SearchReturns(Month, Year, Owner)
 
             Owner.Write2Console("Sending download request...", Color.Yellow)
             ClickButtonByText("DOWNLOAD")
@@ -282,19 +286,7 @@ Click:
         End Sub
 
         Sub DownloadGSTR3B(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
-            Threading.Thread.Sleep(2000)
-
-            Owner.Write2Console("Filling Year & Month..." & vbNewLine & vbNewLine, Color.Yellow)
-            Dim Year_ = Driver.FindElement(By.Name("fin"))
-            SelectValue(Year_, Year)
-            Threading.Thread.Sleep(500)
-            Dim Month_ = Driver.FindElement(By.Name("mon"))
-            SelectValue(Month_, Month)
-            Threading.Thread.Sleep(2000)
-
-            Owner.Write2Console("Searching for returns..." & vbNewLine & vbNewLine, Color.Yellow)
-            ClickButtonByText("SEARCH")
-            Threading.Thread.Sleep(2000)
+            SearchReturns(Month, Year, Owner)
 
             Owner.Write2Console("Sending download request...", Color.Yellow)
             If Not ViewGSTR3B() Then
@@ -319,6 +311,34 @@ Click:
 
             Owner.Write2Console("Going back to previous page..." & vbNewLine & vbNewLine, Color.Yellow)
             ClickButtonByText("BACK")
+            Threading.Thread.Sleep(3000)
+        End Sub
+
+        Sub DownloadGSTR1(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
+            SearchReturns(Month, Year, Owner)
+
+            Owner.Write2Console("Sending download request...", Color.Yellow)
+            ClickButtonByText("VIEW GSTR1")
+            Do Until Driver.Url = "https://return.gst.gov.in/returns/auth/gstr1"
+                Threading.Thread.Sleep(1000)
+            Loop
+            WaitForLoad(Owner)
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Downloading GSTR1...", Color.Green)
+            If ClickButtonByText("PREVIEW") Then
+                Owner.Write2Console("Done..." & vbNewLine, Color.Green)
+            Else
+                Owner.Write2Console("Failed..." & vbNewLine, Color.Red)
+            End If
+            Threading.Thread.Sleep(10000)
+
+            Owner.Write2Console("Going back to previous page...", Color.Yellow)
+            If ClickButtonByText("BACK") Then
+                Owner.Write2Console("Done." & vbNewLine & vbNewLine, Color.Yellow)
+            Else
+                Owner.Write2Console("Failed." & vbNewLine & vbNewLine, Color.Red)
+            End If
             Threading.Thread.Sleep(3000)
         End Sub
 

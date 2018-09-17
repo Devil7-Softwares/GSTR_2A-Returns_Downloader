@@ -119,6 +119,7 @@
     <Compile Include="Classes\MiscFunctions.vb" />
     <Compile Include="Classes\Native.vb" />
     <Compile Include="Classes\RestAPI.vb" />
+    <Compile Include="Classes\Returns.vb" />
     <Compile Include="Classes\WebDriver.vb" />
     <Compile Include="Enums\FileType.vb" />
     <Compile Include="frm_About.designer.vb">

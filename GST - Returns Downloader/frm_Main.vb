@@ -110,6 +110,10 @@ Public Class frm_Main
         If My.Settings.FireFoxLocation = "" OrElse My.Computer.FileSystem.FileExists(My.Settings.FireFoxLocation) Then
             FindFireFox()
         End If
+
+        For Each i As Integer In [Enum].GetValues(GetType(Classes.Returns))
+            Returns.Properties.Items.Add(New RadioGroupItem(i, [Enum].GetName(GetType(Classes.Returns), i).Split("_")(1)))
+        Next
         Returns.EditValue = 0
     End Sub
 
@@ -209,25 +213,32 @@ Public Class frm_Main
                       ProgressBar.EditValue = 0
                   End Sub)
 
-        If Returns.EditValue = 0 Then
-            If Jobs.EditValue = 0 Then
+
+        Select Case Returns.EditValue
+            Case Classes.Returns.GSTR_1
                 For Each i As ReturnsDetails In SelectedItems
                     Me.Invoke(Sub() ProgressBar.EditValue += 1)
-                    RequestGSTR2A(i.Month, i.Year, Types.EditValue, Me)
+                    DownloadGSTR1(i.Month, i.Year, Me)
                 Next
-            ElseIf Jobs.EditValue = 1 Then
+            Case Classes.Returns.GSTR_2A
+                If Jobs.EditValue = 0 Then
+                    For Each i As ReturnsDetails In SelectedItems
+                        Me.Invoke(Sub() ProgressBar.EditValue += 1)
+                        RequestGSTR2A(i.Month, i.Year, Types.EditValue, Me)
+                    Next
+                ElseIf Jobs.EditValue = 1 Then
+                    For Each i As ReturnsDetails In SelectedItems
+                        Me.Invoke(Sub() ProgressBar.EditValue += 1)
+                        CurrentMonth = i.Month
+                        DownloadGSTR2A(i.Month, i.Year, Types.EditValue, Me)
+                    Next
+                End If
+            Case Classes.Returns.GSTR_3B
                 For Each i As ReturnsDetails In SelectedItems
                     Me.Invoke(Sub() ProgressBar.EditValue += 1)
-                    CurrentMonth = i.Month
-                    DownloadGSTR2A(i.Month, i.Year, Types.EditValue, Me)
+                    DownloadGSTR3B(i.Month, i.Year, Me)
                 Next
-            End If
-        ElseIf Returns.EditValue = 1 Then
-            For Each i As ReturnsDetails In SelectedItems
-                Me.Invoke(Sub() ProgressBar.EditValue += 1)
-                DownloadGSTR3B(i.Month, i.Year, Me)
-            Next
-        End If
+        End Select
 
         Write2Console("Logging Out..." & vbNewLine & vbNewLine, Color.Yellow)
         Driver.Navigate().GoToUrl("https://services.gst.gov.in/services/logout")
@@ -242,7 +253,7 @@ Public Class frm_Main
             Else
                 Dim Dest As String = IO.Path.GetFileName(i)
                 Write2Console("Moving File """ & Dest & """..." & vbNewLine & vbNewLine, Color.Green)
-                My.Computer.FileSystem.MoveFile(i, IO.Path.Combine(StoreDir, Dest))
+                My.Computer.FileSystem.MoveFile(i, IO.Path.Combine(StoreDir, Dest), True)
             End If
         Next
         Write2Console("Process Completed... :-)" & vbNewLine & vbNewLine, Color.Green)
@@ -296,13 +307,13 @@ Public Class frm_Main
     End Sub
 
     Private Sub Returns_EditValueChanged(sender As Object, e As EventArgs) Handles Returns.EditValueChanged
-        Jobs.Properties.Items.Item(0).Enabled = (Returns.EditValue = 0)
-        Types.Properties.Items.Item(0).Enabled = (Returns.EditValue = 0)
-        Types.Properties.Items.Item(1).Enabled = (Returns.EditValue = 0)
-        Types.Properties.Items.Item(2).Enabled = (Returns.EditValue = 1)
+        Jobs.Properties.Items.Item(0).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A)
+        Types.Properties.Items.Item(0).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A)
+        Types.Properties.Items.Item(1).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A)
+        Types.Properties.Items.Item(2).Enabled = (Returns.EditValue <> Classes.Returns.GSTR_2A)
 
-        Jobs.EditValue = If(Returns.EditValue = 0, 0, 1)
-        Types.EditValue = If(Returns.EditValue = 0, 0, 2)
+        Jobs.EditValue = If(Returns.EditValue = Classes.Returns.GSTR_2A, 0, 1)
+        Types.EditValue = If(Returns.EditValue = Classes.Returns.GSTR_2A, 0, 2)
     End Sub
 
     Private Sub txt_LoginID_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_LoginID.KeyDown
