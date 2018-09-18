@@ -105,10 +105,9 @@ Public Class frm_Main
     End Sub
 
     Private Sub frm_Main_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        gc_Months.DataSource = Classes.MiscFunctions.GetAssessmentMonths
         LoadSettings()
         If My.Settings.FireFoxLocation = "" OrElse My.Computer.FileSystem.FileExists(My.Settings.FireFoxLocation) Then
-            FindFireFox()
+            FindFirefox()
         End If
 
         For Each i As Integer In [Enum].GetValues(GetType(Classes.Returns))
@@ -238,6 +237,24 @@ Public Class frm_Main
                     Me.Invoke(Sub() ProgressBar.EditValue += 1)
                     DownloadGSTR3B(i.Month, i.Year, Me)
                 Next
+            Case Classes.Returns.GSTR_4
+                For Each i As ReturnsDetails In SelectedItems
+                    Me.Invoke(Sub() ProgressBar.EditValue += 1)
+                    DownloadGSTR4(i.Month, i.Year, Me)
+                Next
+            Case Classes.Returns.GSTR_4A
+                If Jobs.EditValue = 0 Then
+                    For Each i As ReturnsDetails In SelectedItems
+                        Me.Invoke(Sub() ProgressBar.EditValue += 1)
+                        RequestGSTR4A(i.Month, i.Year, Me)
+                    Next
+                ElseIf Jobs.EditValue = 1 Then
+                    For Each i As ReturnsDetails In SelectedItems
+                        Me.Invoke(Sub() ProgressBar.EditValue += 1)
+                        CurrentMonth = i.Month
+                        DownloadGSTR4A(i.Month, i.Year, Me)
+                    Next
+                End If
         End Select
 
         Write2Console("Logging Out..." & vbNewLine & vbNewLine, Color.Yellow)
@@ -307,13 +324,20 @@ Public Class frm_Main
     End Sub
 
     Private Sub Returns_EditValueChanged(sender As Object, e As EventArgs) Handles Returns.EditValueChanged
-        Jobs.Properties.Items.Item(0).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A)
-        Types.Properties.Items.Item(0).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A)
+        Jobs.Properties.Items.Item(0).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A Or Returns.EditValue = Classes.Returns.GSTR_4A)
+        Types.Properties.Items.Item(0).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A Or Returns.EditValue = Classes.Returns.GSTR_4A)
         Types.Properties.Items.Item(1).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A)
-        Types.Properties.Items.Item(2).Enabled = (Returns.EditValue <> Classes.Returns.GSTR_2A)
+        Types.Properties.Items.Item(2).Enabled = (Returns.EditValue <> Classes.Returns.GSTR_2A AndAlso Returns.EditValue <> Classes.Returns.GSTR_4A)
 
-        Jobs.EditValue = If(Returns.EditValue = Classes.Returns.GSTR_2A, 0, 1)
-        Types.EditValue = If(Returns.EditValue = Classes.Returns.GSTR_2A, 0, 2)
+        Jobs.EditValue = If(Returns.EditValue = Classes.Returns.GSTR_2A Or Returns.EditValue = Classes.Returns.GSTR_4A, 0, 1)
+        Types.EditValue = If(Returns.EditValue = Classes.Returns.GSTR_2A Or Returns.EditValue = Classes.Returns.GSTR_4A, 0, 2)
+
+        Select Case Returns.EditValue
+            Case Classes.Returns.GSTR_1, Classes.Returns.GSTR_2A, Classes.Returns.GSTR_3B
+                gc_Months.DataSource = Classes.MiscFunctions.GetAssessmentMonths
+            Case Classes.Returns.GSTR_4, Classes.Returns.GSTR_4A
+                gc_Months.DataSource = Classes.MiscFunctions.GetAssessmentQuarters
+        End Select
     End Sub
 
     Private Sub txt_LoginID_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_LoginID.KeyDown

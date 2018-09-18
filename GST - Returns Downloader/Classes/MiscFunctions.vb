@@ -46,6 +46,45 @@ Namespace Classes
             Return R
         End Function
 
+        Function GetAssessmentQuarters() As List(Of Objects.ReturnsDetails)
+            Dim R As New List(Of Objects.ReturnsDetails)
+
+            Dim MonthsOrder As List(Of Integer) = New List(Of Integer)({1, 3, 10, 12, 7, 9, 4, 6})
+
+            Dim CurrentMonth As Integer = Now.Month
+            Dim CurrentYear As Integer = ToFinancialYear(Now) - 1
+
+            For i As Integer = 0 To CurrentYear - 2017 'GST Is Implemented in 2017
+                Dim Year As Integer = CurrentYear - i
+                Dim AssessmentYear As String = Year & "-" & CInt(Year + 1).ToString.Substring(2, 2)
+
+                For j As Integer = 0 To MonthsOrder.Count - 2 Step 2
+                    Dim BeginMonth As Integer = MonthsOrder(j)
+                    Dim EndMonth As Integer = MonthsOrder(j + 1)
+                    If Year = 2017 AndAlso j > 4 Then Continue For
+                    If Year = CurrentYear Then
+                        Dim SkipIndex As Integer = 0
+                        Select Case CurrentMonth
+                            Case 4, 5, 6
+                                SkipIndex = 6
+                            Case 7, 8, 9
+                                SkipIndex = 4
+                            Case 10, 11, 12
+                                SkipIndex = 2
+                            Case 1, 2, 3
+                                SkipIndex = 0
+                        End Select
+                        If j < SkipIndex Then
+                            Continue For
+                        End If
+                    End If
+                    R.Add(New Objects.ReturnsDetails(DateAndTime.MonthName(BeginMonth).Substring(0, 3) & "-" & DateAndTime.MonthName(EndMonth).Substring(0, 3), AssessmentYear))
+                Next
+            Next
+
+            Return R
+        End Function
+
         Public Function ToFinancialYear(ByVal dateTime_ As Date) As Integer
             Return If(dateTime_.Month >= 4, dateTime_.Year + 1, dateTime_.Year)
         End Function

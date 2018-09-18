@@ -160,6 +160,36 @@ Click:
             Return True
         End Function
 
+        Private Function DownloadGSTR4A()
+            For Each i As IWebElement In Driver.FindElements(By.TagName("div"))
+                If i.Text.Contains("Auto drafted details for registered persons opting composition levy") And Not i.Text.Contains("Quarterly Return for registered person opting for composition levy") Then
+                    If i.Text.Contains("DOWNLOAD") Then
+                        For Each b As IWebElement In i.FindElements(By.TagName("button"))
+                            If b.Text = "DOWNLOAD" Then
+                                Dim tries As Integer = 0
+Click:
+                                tries += 1
+                                Try
+                                    b.Click()
+                                    Return True
+                                Catch ex As InvalidOperationException
+                                    If tries < 11 Then
+                                        Threading.Thread.Sleep(1000)
+                                        GoTo Click
+                                    End If
+                                End Try
+                                Exit For
+                            End If
+                        Next
+                    Else
+                        Return False
+                    End If
+                    Exit For
+                End If
+            Next
+            Return True
+        End Function
+
         Sub SetAttribute(ByVal element As IWebElement, ByVal attName As String, ByVal attValue As String)
             Driver.ExecuteScript("arguments[0].setAttribute(arguments[1], arguments[2]);", element, attName, attValue)
         End Sub
@@ -339,6 +369,104 @@ Click:
             Else
                 Owner.Write2Console("Failed." & vbNewLine & vbNewLine, Color.Red)
             End If
+            Threading.Thread.Sleep(3000)
+        End Sub
+
+        Sub DownloadGSTR4(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
+            SearchReturns(Month, Year, Owner)
+
+            Owner.Write2Console("Sending download request...", Color.Yellow)
+            ClickButtonByText("VIEW GSTR4")
+            Do Until Driver.Url = "https://return.gst.gov.in/returns2/auth/gstr4"
+                Threading.Thread.Sleep(1000)
+            Loop
+            WaitForLoad(Owner)
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Downloading GSTR4...", Color.Green)
+            If ClickButtonByText("PREVIEW") Then
+                Owner.Write2Console("Done..." & vbNewLine, Color.Green)
+            Else
+                Owner.Write2Console("Failed..." & vbNewLine, Color.Red)
+            End If
+            Threading.Thread.Sleep(10000)
+
+            Owner.Write2Console("Going back to previous page...", Color.Yellow)
+            If ClickButtonByText("BACK") Then
+                Owner.Write2Console("Done." & vbNewLine & vbNewLine, Color.Yellow)
+            Else
+                Owner.Write2Console("Failed." & vbNewLine & vbNewLine, Color.Red)
+            End If
+            Threading.Thread.Sleep(3000)
+        End Sub
+
+        Sub RequestGSTR4A(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
+            SearchReturns(Month, Year, Owner)
+
+            Owner.Write2Console("Sending download request...", Color.Yellow)
+            DownloadGSTR4A()
+            WaitForLoad(Owner)
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Sending generate file request..." & vbNewLine & vbNewLine, Color.Yellow)
+
+            ClickButtonByText("GENERATE JSON FILE TO DOWNLOAD")
+
+            Threading.Thread.Sleep(3000)
+
+            Owner.Write2Console("Processing response..." & vbNewLine, Color.Yellow)
+            For Each i As IWebElement In Driver.FindElements(By.TagName("alert-message"))
+                If i.GetAttribute("ng-show") = "showMsg" Then
+                    If i.Text.Contains("Your request for generation has been accepted kindly wait for") Then
+                        Owner.Write2Console(Month & " - Success" & vbNewLine & vbNewLine, Color.Green)
+                    ElseIf i.Text.Contains("File Generation is in progress, please try after sometime..") Then
+                        Owner.Write2Console(Month & " - Generation is in progress" & vbNewLine & vbNewLine, Color.Green)
+                    ElseIf i.Text.Contains("click on generate file again") Or i.Text.Contains("click on the download button again") Then
+                        Owner.Write2Console(Month & " - Old Generation Found. Generating New." & vbNewLine & vbNewLine, Color.Green)
+                        ClickButtonByText("GENERATE JSON FILE TO DOWNLOAD")
+                    End If
+                End If
+            Next
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Going back to previous page..." & vbNewLine & vbNewLine, Color.Yellow)
+            ClickButtonByText("BACK")
+            Threading.Thread.Sleep(3000)
+        End Sub
+
+        Sub DownloadGSTR4A(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
+            SearchReturns(Month, Year, Owner)
+
+            Owner.Write2Console("Sending download request...", Color.Yellow)
+            DownloadGSTR4A()
+            WaitForLoad(Owner)
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Sending generate file request..." & vbNewLine & vbNewLine, Color.Yellow)
+            ClickButtonByText("GENERATE JSON FILE TO DOWNLOAD")
+            Threading.Thread.Sleep(3000)
+
+            Owner.Write2Console("Processing response..." & vbNewLine, Color.Yellow)
+            For Each i As IWebElement In Driver.FindElements(By.TagName("alert-message"))
+                If i.GetAttribute("ng-show") = "showMsg" Then
+                    If i.Text.Contains("Your request for generation has been accepted kindly wait for") Then
+                        Owner.Write2Console(Month & " - File not generated. Generation Requested." & vbNewLine & vbNewLine, Color.Green)
+                    ElseIf i.Text.Contains("File Generation is in progress, please try after sometime..") Then
+                        Owner.Write2Console(Month & " - Generation is in progress" & vbNewLine & vbNewLine, Color.Green)
+                    ElseIf i.Text.Contains("click on generate file again") Or i.Text.Contains("click on the download button again") Then
+                        For Each link As IWebElement In Driver.FindElements(By.TagName("a"))
+                            If link.Text.Contains("Click here to download ") Then
+                                Owner.Write2Console(Month & " - File Found. Downloading." & vbNewLine & vbNewLine, Color.Green)
+                                link.Click()
+                            End If
+                        Next
+                    End If
+                End If
+            Next
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Going back to previous page..." & vbNewLine & vbNewLine, Color.Yellow)
+            ClickButtonByText("BACK")
             Threading.Thread.Sleep(3000)
         End Sub
 

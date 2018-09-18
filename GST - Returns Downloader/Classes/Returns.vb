@@ -19,12 +19,12 @@
 '                                                                          '
 '=========================================================================='
 
-Imports System.Web.Script.Serialization
-
 Namespace Classes
     Public Enum Returns As Integer
         GSTR_1 = 0
         GSTR_2A = 1
         GSTR_3B = 2
+        GSTR_4 = 3
+        GSTR_4A = 4
     End Enum
 End Namespace
