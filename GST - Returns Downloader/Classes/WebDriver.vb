@@ -130,36 +130,6 @@ Click:
             Return False
         End Function
 
-        Function ViewGSTR3B()
-            For Each i As IWebElement In Driver.FindElements(By.TagName("div"))
-                If i.Text.Contains("GSTR3B") AndAlso Not i.Text.Contains("GSTR1") AndAlso Not i.Text.Contains("GSTR2A") Then
-                    If i.Text.Contains("Filed") And i.Text.Contains("VIEW") Then
-                        For Each b As IWebElement In i.FindElements(By.TagName("button"))
-                            If b.Text = "VIEW" AndAlso b.GetAttribute("data-ng-click") = "page_rtp(x.return_ty,x.due_dt,x.status)" Then
-                                Dim tries As Integer = 0
-Click:
-                                tries += 1
-                                Try
-                                    b.Click()
-                                    Return True
-                                Catch ex As InvalidOperationException
-                                    If tries < 11 Then
-                                        Threading.Thread.Sleep(1000)
-                                        GoTo Click
-                                    End If
-                                End Try
-                                Exit For
-                            End If
-                        Next
-                    Else
-                        Return False
-                    End If
-                    Exit For
-                End If
-            Next
-            Return True
-        End Function
-
         Private Function DownloadGSTR4A()
             For Each i As IWebElement In Driver.FindElements(By.TagName("div"))
                 If i.Text.Contains("Auto drafted details for registered persons opting composition levy") And Not i.Text.Contains("Quarterly Return for registered person opting for composition levy") Then
@@ -319,15 +289,16 @@ Click:
             SearchReturns(Month, Year, Owner)
 
             Owner.Write2Console("Sending download request...", Color.Yellow)
-            If Not ViewGSTR3B() Then
-                Owner.Write2Console("GSTR 3B Not Filed for " & Month & vbNewLine, Color.Red)
-                Exit Sub
+            If ClickButtonByText("VIEW GSTR3B") Then
+                Owner.Write2Console("Done.", Color.Green)
+            Else
+                Owner.Write2Console("Failed!", Color.Red)
             End If
             Do Until Driver.Url = "https://return.gst.gov.in/returns/auth/gstr3b"
                 Threading.Thread.Sleep(1000)
             Loop
             WaitForLoad(Owner)
-            Threading.Thread.Sleep(2000)
+            Threading.Thread.Sleep(5000)
 
             HideAllDialogs()
 
