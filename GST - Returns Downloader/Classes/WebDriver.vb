@@ -98,6 +98,17 @@ Namespace Classes
             Return ClickButtonByText(BtnName, Driver)
         End Function
 
+        Function ClickButtonByTextWithingDiv(ByVal BtnName As String, ByVal TextToMatchinDiv As String)
+            For Each div As IWebElement In Driver.FindElementsByTagName("div")
+                If div.GetAttribute("class") = "col-sm-4 col-xs-12 col-md-4 col-lg-4" Then
+                    If div.Text.ToUpper.Contains(TextToMatchinDiv.ToUpper) Then
+                        Return ClickButtonByText(BtnName, div)
+                    End If
+                End If
+            Next
+            Return False
+        End Function
+
         Function ClickButtonByText(ByVal BtnName As String, ByVal Parent As Object) As Boolean
             For Each i As IWebElement In Parent.FindElements(By.TagName("button"))
                 If i.Text = BtnName Then
@@ -206,7 +217,11 @@ Click:
             SearchReturns(Month, Year, Owner)
 
             Owner.Write2Console("Sending download request...", Color.Yellow)
-            ClickButtonByText("DOWNLOAD")
+            If ClickButtonByTextWithingDiv("DOWNLOAD", "GSTR2A") Then
+                Owner.Write2Console("Done." & vbNewLine, Color.Green)
+            Else
+                Owner.Write2Console("Failed." & vbNewLine, Color.Red)
+            End If
             WaitForLoad(Owner)
             Threading.Thread.Sleep(2000)
 
@@ -247,7 +262,11 @@ Click:
             SearchReturns(Month, Year, Owner)
 
             Owner.Write2Console("Sending download request...", Color.Yellow)
-            ClickButtonByText("DOWNLOAD")
+            If ClickButtonByTextWithingDiv("DOWNLOAD", "GSTR2A") Then
+                Owner.Write2Console("Done." & vbNewLine, Color.Green)
+            Else
+                Owner.Write2Console("Failed." & vbNewLine, Color.Red)
+            End If
             WaitForLoad(Owner)
             Threading.Thread.Sleep(2000)
 
