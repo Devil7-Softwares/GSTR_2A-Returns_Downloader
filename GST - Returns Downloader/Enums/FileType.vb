@@ -23,5 +23,6 @@ Namespace Enums
     Public Enum FileType As Integer
         JSON = 0
         Excel = 1
+        PDF = 2
     End Enum
 End Namespace

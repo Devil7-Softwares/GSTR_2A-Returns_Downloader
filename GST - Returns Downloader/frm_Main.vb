@@ -217,7 +217,16 @@ Public Class frm_Main
             Case Classes.Returns.GSTR_1
                 For Each i As ReturnsDetails In SelectedItems
                     Me.Invoke(Sub() ProgressBar.EditValue += 1)
-                    DownloadGSTR1(i.Month, i.Year, Me)
+                    If Jobs.EditValue = 0 Then
+                        RequestGSTR1(i.Month, i.Year, Me)
+                    ElseIf Jobs.EditValue = 1 Then
+                        Select Case Types.EditValue
+                            Case Enums.FileType.JSON
+                                DownloadGSTR1JSON(i.Month, i.Year, Me)
+                            Case Enums.FileType.PDF
+                                DownloadGSTR1PDF(i.Month, i.Year, Me)
+                        End Select
+                    End If
                 Next
             Case Classes.Returns.GSTR_2A
                 If Jobs.EditValue = 0 Then
@@ -324,8 +333,9 @@ Public Class frm_Main
     End Sub
 
     Private Sub Returns_EditValueChanged(sender As Object, e As EventArgs) Handles Returns.EditValueChanged
-        Jobs.Properties.Items.Item(0).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A Or Returns.EditValue = Classes.Returns.GSTR_4A)
-        Types.Properties.Items.Item(0).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A Or Returns.EditValue = Classes.Returns.GSTR_4A)
+        On Error Resume Next
+        Jobs.Properties.Items.Item(0).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A Or Returns.EditValue = Classes.Returns.GSTR_4A Or Returns.EditValue = Classes.Returns.GSTR_1)
+        Types.Properties.Items.Item(0).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A Or Returns.EditValue = Classes.Returns.GSTR_4A Or Returns.EditValue = Classes.Returns.GSTR_1)
         Types.Properties.Items.Item(1).Enabled = (Returns.EditValue = Classes.Returns.GSTR_2A)
         Types.Properties.Items.Item(2).Enabled = (Returns.EditValue <> Classes.Returns.GSTR_2A AndAlso Returns.EditValue <> Classes.Returns.GSTR_4A)
 
@@ -356,6 +366,16 @@ Public Class frm_Main
 
                 End Try
             End If
+        End If
+    End Sub
+
+    Private Sub Jobs_EditValueChanged(sender As Object, e As EventArgs) Handles Jobs.EditValueChanged
+        On Error Resume Next
+        If Returns.EditValue = Classes.Returns.GSTR_1 AndAlso Jobs.EditValue = 1 Then
+            Types.Properties.Items.Item(2).Enabled = True
+        Else
+            Types.Properties.Items.Item(2).Enabled = False
+            Types.EditValue = 0
         End If
     End Sub
 

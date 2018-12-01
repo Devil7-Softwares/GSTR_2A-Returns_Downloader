@@ -334,7 +334,83 @@ Click:
             Threading.Thread.Sleep(3000)
         End Sub
 
-        Sub DownloadGSTR1(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
+        Sub DownloadGSTR1JSON(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
+            SearchReturns(Month, Year, Owner)
+
+            Owner.Write2Console("Sending download request...", Color.Yellow)
+            If ClickButtonByTextWithingDiv("DOWNLOAD", "GSTR1") Then
+                Owner.Write2Console("Done." & vbNewLine, Color.Green)
+            Else
+                Owner.Write2Console("Failed." & vbNewLine, Color.Red)
+            End If
+            WaitForLoad(Owner)
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Sending generate file request..." & vbNewLine & vbNewLine, Color.Yellow)
+            ClickButtonByText("GENERATE JSON FILE TO DOWNLOAD")
+            Threading.Thread.Sleep(3000)
+
+            Owner.Write2Console("Processing response..." & vbNewLine, Color.Yellow)
+            For Each i As IWebElement In Driver.FindElements(By.TagName("alert-message"))
+                If i.GetAttribute("ng-show") = "showMsg" Then
+                    If i.Text.Contains("Your request for generation has been accepted kindly wait for") Then
+                        Owner.Write2Console(Month & " - File not generated. Generation Requested." & vbNewLine & vbNewLine, Color.Green)
+                    ElseIf i.Text.Contains("File Generation is in progress, please try after sometime..") Then
+                        Owner.Write2Console(Month & " - Generation is in progress" & vbNewLine & vbNewLine, Color.Green)
+                    ElseIf i.Text.Contains("click on generate file again") Or i.Text.Contains("click on the download button again") Then
+                        For Each link As IWebElement In Driver.FindElements(By.TagName("a"))
+                            If link.Text.Contains("Click here to download ") Then
+                                Owner.Write2Console(Month & " - File Found. Downloading." & vbNewLine & vbNewLine, Color.Green)
+                                link.Click()
+                            End If
+                        Next
+                    End If
+                End If
+            Next
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Going back to previous page..." & vbNewLine & vbNewLine, Color.Yellow)
+            ClickButtonByText("BACK")
+            Threading.Thread.Sleep(3000)
+        End Sub
+
+        Sub RequestGSTR1(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
+            SearchReturns(Month, Year, Owner)
+
+            Owner.Write2Console("Sending download request...", Color.Yellow)
+            If ClickButtonByTextWithingDiv("DOWNLOAD", "GSTR1") Then
+                Owner.Write2Console("Done." & vbNewLine, Color.Green)
+            Else
+                Owner.Write2Console("Failed." & vbNewLine, Color.Red)
+            End If
+            WaitForLoad(Owner)
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Sending generate file request..." & vbNewLine & vbNewLine, Color.Yellow)
+            ClickButtonByText("GENERATE JSON FILE TO DOWNLOAD")
+            Threading.Thread.Sleep(3000)
+
+            Owner.Write2Console("Processing response..." & vbNewLine, Color.Yellow)
+            For Each i As IWebElement In Driver.FindElements(By.TagName("alert-message"))
+                If i.GetAttribute("ng-show") = "showMsg" Then
+                    If i.Text.Contains("Your request for generation has been accepted kindly wait for") Then
+                        Owner.Write2Console(Month & " - Success" & vbNewLine & vbNewLine, Color.Green)
+                    ElseIf i.Text.Contains("File Generation is in progress, please try after sometime..") Then
+                        Owner.Write2Console(Month & " - Generation is in progress" & vbNewLine & vbNewLine, Color.Green)
+                    ElseIf i.Text.Contains("click on generate file again") Or i.Text.Contains("click on the download button again") Then
+                        Owner.Write2Console(Month & " - Old Generation Found. Generating New." & vbNewLine & vbNewLine, Color.Green)
+                        ClickButtonByText("GENERATE JSON FILE TO DOWNLOAD")
+                    End If
+                End If
+            Next
+            Threading.Thread.Sleep(2000)
+
+            Owner.Write2Console("Going back to previous page..." & vbNewLine & vbNewLine, Color.Yellow)
+            ClickButtonByText("BACK")
+            Threading.Thread.Sleep(3000)
+        End Sub
+
+        Sub DownloadGSTR1PDF(ByVal Month As String, ByVal Year As String, ByVal Owner As frm_Main)
             SearchReturns(Month, Year, Owner)
 
             Owner.Write2Console("Sending download request...", Color.Yellow)
