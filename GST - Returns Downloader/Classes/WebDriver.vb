@@ -539,7 +539,17 @@ Click:
         Sub SelectValue(ByVal SelectElement As IWebElement, ByVal Value As String)
             For Each i As IWebElement In SelectElement.FindElements(By.TagName("option"))
                 If i.GetAttribute("label") = Value Then
-                    i.Click()
+                    Dim Tries As Integer = 0
+Click:
+                    Try
+                        i.Click()
+                    Catch ex As ElementClickInterceptedException
+                        If Tries < 5 Then
+                            Threading.Thread.Sleep(1000)
+                            Tries += 1
+                            GoTo Click
+                        End If
+                    End Try
                     Exit For
                 End If
             Next
