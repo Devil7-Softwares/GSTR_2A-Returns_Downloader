@@ -351,7 +351,7 @@ Public Class frm_Main
     End Sub
 
     Private Sub txt_LoginID_KeyDown(sender As Object, e As KeyEventArgs) Handles txt_LoginID.KeyDown
-        If e.Control AndAlso e.KeyCode = Windows.Forms.Keys.V Then
+        If e.Control AndAlso e.KeyCode = System.Windows.Forms.Keys.V Then
             If My.Computer.Clipboard.GetText.Contains(vbTab) Then
                 Try
                     Dim LoginID As String = My.Computer.Clipboard.GetText.Split(vbTab)(0)
